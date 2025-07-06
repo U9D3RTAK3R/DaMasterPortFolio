@@ -1,6 +1,6 @@
-# 🌐 Personal Portfolio Website - v1.0
+# 🌐 Personal Portfolio Website - v1.1
 
-Welcome to the **v1.0** release of my personal portfolio website!  
+Welcome to the **v1.1** release of my personal portfolio website!  
 This project was built using **ReactJS** and **Tailwind CSS** as part of my journey into web development.
 
 ---
@@ -59,6 +59,7 @@ To run this project locally:
 
 - React Documentation - https://reactjs.org/
 - Tailwind CSS Documentation - https://tailwindcss.com/
+- EmailJS Documentation - https://www.emailjs.com/docs/tutorial/overview/
 - Inspiration from other developer portfolios and tutorials
 
 ---
