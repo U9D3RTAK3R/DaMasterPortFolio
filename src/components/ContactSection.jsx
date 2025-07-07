@@ -8,6 +8,7 @@ import {
   Twitch,
   Twitter,
 } from "lucide-react";
+import { SiDiscord } from "react-icons/si";
 import { cn } from "@/lib/utils";
 import { useToast } from "@/hooks/use-toast";
 import { useState, useRef  } from "react";
@@ -24,10 +25,10 @@ export const ContactSection = () => {
 
     emailjs
       .sendForm(
-        "service_wmqx6p2",       // Replace with your EmailJS service ID
-        "template_qj0w0vp",      // Replace with your EmailJS template ID
+        "service_wmqx6p2",       //EmailJS service ID
+        "template_qj0w0vp",      //EmailJS template ID
         form.current,
-        "D0v0z3ymtO1EfL-ui"        // Replace with your EmailJS public key
+        "D0v0z3ymtO1EfL-ui"      //EmailJS public key
       )
       .then(
         () => {
@@ -125,6 +126,9 @@ export const ContactSection = () => {
                 </a>
                 <a href="#" target="_blank">
                   <Twitch />
+                </a>
+                <a href="https://discord.com/users/725581368343658568/" target="_blank">
+                  <SiDiscord />
                 </a>
               </div>
             </div>
