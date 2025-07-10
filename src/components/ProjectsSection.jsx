@@ -18,7 +18,7 @@ const projects = [
     image: "/projects/placeholder.png",
     tags: ["MongoDB", "Express.js", "Node.js", "React", "TailWindCSS"],
     demoUrl: "#",
-    githubUrl: "#",
+    githubUrl: "https://github.com/U9D3RTAK3R/DaMasterFinance",
   },
   {
     id: 3,
