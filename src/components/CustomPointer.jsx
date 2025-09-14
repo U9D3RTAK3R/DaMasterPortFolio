@@ -140,13 +140,14 @@ export const CustomPointer = () => {
     return (
       <div
         className={cn(
-          "fixed pointer-events-none z-[9999] transition-all duration-100 ease-out",
+          "fixed pointer-events-none z-[9999] transition-transform duration-150 ease-out",
           isClicking ? "scale-75" : "scale-100"
         )}
         style={{
           left: position.x,
           top: position.y,
           transform: `translate(-50%, -50%) scale(${isClicking ? 0.75 : isHovering ? 1.3 : 1})`,
+          willChange: 'transform',
         }}
       >
       {/* Outer ring */}
