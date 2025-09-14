@@ -13,6 +13,7 @@ import { cn } from "@/lib/utils";
 import { useToast } from "@/hooks/use-toast";
 import { useState, useRef  } from "react";
 import emailjs from "@emailjs/browser";
+import { AnimatedSection } from "./AnimatedSection";
 
 export const ContactSection = () => {
   const { toast } = useToast();
@@ -52,14 +53,18 @@ export const ContactSection = () => {
   return (
     <section id="contact" className="py-24 px-4 relative bg-secondary/30">
       <div className="container mx-auto max-w-5xl">
-        <h2 className="text-3xl md:text-4xl font-bold mb-4 text-center">
-          Get In <span className="text-primary"> Touch</span>
-        </h2>
+        <AnimatedSection animationType="slide-up">
+          <h2 className="text-3xl md:text-4xl font-bold mb-4 text-center">
+            Get In <span className="text-gradient"> Touch</span>
+          </h2>
+        </AnimatedSection>
 
-        <p className="text-center text-muted-foreground mb-12 max-w-2xl mx-auto">
-          Have a project in mind or want to collaborate? Feel free to reach out.
-          I'm always open to discussing new opportunities.
-        </p>
+        <AnimatedSection animationType="fade-in" delay={300}>
+          <p className="text-center text-muted-foreground mb-12 max-w-2xl mx-auto">
+            Have a project in mind or want to collaborate? Feel free to reach out.
+            I'm always open to discussing new opportunities.
+          </p>
+        </AnimatedSection>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
           <div className="space-y-8">
@@ -115,20 +120,25 @@ export const ContactSection = () => {
             <div className="pt-8">
               <h4 className="font-medium mb-4"> Connect With Me</h4>
               <div className="flex space-x-4 justify-center">
-                <a href="https://www.linkedin.com/in/aritra-saha-a5ab88311/" target="_blank">
-                  <Linkedin />
+                <a href="https://www.linkedin.com/in/aritra-saha-a5ab88311/" target="_blank" 
+                   className="group p-2 rounded-full transition-all duration-300 hover:bg-blue-500/10 hover:scale-110 hover:-translate-y-1">
+                  <Linkedin className="transition-all duration-300 group-hover:text-blue-500 group-hover:drop-shadow-lg" />
                 </a>
-                <a href="#" target="_blank">
-                  <Twitter />
+                <a href="#" target="_blank"
+                   className="group p-2 rounded-full transition-all duration-300 hover:bg-sky-500/10 hover:scale-110 hover:-translate-y-1">
+                  <Twitter className="transition-all duration-300 group-hover:text-sky-500 group-hover:drop-shadow-lg" />
                 </a>
-                <a href="https://www.instagram.com/u.n.d.e.r.t.a.k.e.r_07/" target="_blank">
-                  <Instagram />
+                <a href="https://www.instagram.com/u.n.d.e.r.t.a.k.e.r_07/" target="_blank"
+                   className="group p-2 rounded-full transition-all duration-300 hover:bg-pink-500/10 hover:scale-110 hover:-translate-y-1">
+                  <Instagram className="transition-all duration-300 group-hover:text-pink-500 group-hover:drop-shadow-lg" />
                 </a>
-                <a href="#" target="_blank">
-                  <Twitch />
+                <a href="#" target="_blank"
+                   className="group p-2 rounded-full transition-all duration-300 hover:bg-purple-500/10 hover:scale-110 hover:-translate-y-1">
+                  <Twitch className="transition-all duration-300 group-hover:text-purple-500 group-hover:drop-shadow-lg" />
                 </a>
-                <a href="https://discord.com/users/725581368343658568/" target="_blank">
-                  <SiDiscord />
+                <a href="https://discord.com/users/725581368343658568/" target="_blank"
+                   className="group p-2 rounded-full transition-all duration-300 hover:bg-indigo-500/10 hover:scale-110 hover:-translate-y-1">
+                  <SiDiscord className="transition-all duration-300 group-hover:text-indigo-500 group-hover:drop-shadow-lg" />
                 </a>
               </div>
             </div>
