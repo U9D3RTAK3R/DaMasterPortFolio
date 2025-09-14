@@ -1,5 +1,4 @@
 import { Navbar } from "../components/Navbar";
-import { ThemeToggle } from "../components/ThemeToggle";
 import { StarBackground } from "@/components/StarBackground";
 import { CloudBackground } from "@/components/CloudBackground";
 import { HeroSection } from "@/components/HeroSection";
@@ -12,8 +11,6 @@ import { Footer } from "@/components/Footer";
 export const Home = () => {
     return(
         <div className="min-h-screen">
-            {/* Theme Toggle */}
-            <ThemeToggle />
             {/* Background Effects */}
             <StarBackground />
             <CloudBackground />

@@ -1,5 +1,5 @@
 import { cn } from "@/lib/utils";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Moon, Sun } from "lucide-react";
 import { useEffect, useState } from "react";
 
 const navItems = [
@@ -13,15 +13,60 @@ const navItems = [
 export const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.screenY > 10);
+      setIsScrolled(window.scrollY > 10);
     };
 
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  // Theme management
+  useEffect(() => {
+    const storedTheme = localStorage.getItem("theme");
+    if (storedTheme === "dark") {
+      setIsDarkMode(true);
+      document.documentElement.classList.add("dark");
+    } else {
+      setIsDarkMode(false);
+    }
+  }, []);
+
+  const toggleTheme = () => {
+    if (isDarkMode) {
+      document.documentElement.classList.remove("dark");
+      localStorage.setItem("theme", "light");
+      setIsDarkMode(false);
+    } else {
+      document.documentElement.classList.add("dark");
+      localStorage.setItem("theme", "dark");
+      setIsDarkMode(true);
+    }
+  };
+
+  // Close menu when clicking outside or pressing escape
+  useEffect(() => {
+    const handleEscape = (e) => {
+      if (e.key === 'Escape') {
+        setIsMenuOpen(false);
+      }
+    };
+
+    if (isMenuOpen) {
+      document.addEventListener('keydown', handleEscape);
+      document.body.style.overflow = 'hidden'; // Prevent scrolling when menu is open
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+
+    return () => {
+      document.removeEventListener('keydown', handleEscape);
+      document.body.style.overflow = 'unset';
+    };
+  }, [isMenuOpen]);
   return (
     <nav
       className={cn(
@@ -29,7 +74,7 @@ export const Navbar = () => {
         isScrolled ? "py-3 shadow-lg" : "py-5"
       )}
     >
-      <div className="container flex items-center justify-between">
+      <div className="container flex items-center justify-between px-4">
         <a
           className="text-xl font-bold text-primary flex items-center"
           href="#hero"
@@ -41,7 +86,7 @@ export const Navbar = () => {
         </a>
 
         {/* desktop nav */}
-        <div className="hidden md:flex space-x-8">
+        <div className="hidden md:flex items-center space-x-8">
           {navItems.map((item, key) => (
             <a
               key={key}
@@ -51,38 +96,77 @@ export const Navbar = () => {
               {item.name}
             </a>
           ))}
+          
+          {/* Desktop Theme Toggle */}
+          <button
+            onClick={toggleTheme}
+            className="p-2 rounded-full transition-colors duration-300 hover:bg-primary/10"
+            aria-label={isDarkMode ? "Switch to Light Mode" : "Switch to Dark Mode"}
+          >
+            {isDarkMode ? (
+              <Sun className="h-5 w-5 text-yellow-500" />
+            ) : (
+              <Moon className="h-5 w-5 text-blue-600" />
+            )}
+          </button>
         </div>
 
-        {/* mobile nav */}
-
+        {/* mobile nav button */}
         <button
           onClick={() => setIsMenuOpen((prev) => !prev)}
-          className="md:hidden p-2 text-foreground z-50"
+          className="md:hidden p-2 text-foreground relative z-50 bg-primary/10 rounded-lg hover:bg-primary/20 transition-colors"
           aria-label={isMenuOpen ? "Close Menu" : "Open Menu"}
         >
-          {isMenuOpen ? <X size={24} /> : <Menu size={24} />}{" "}
+          {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
         </button>
+      </div>
 
-        <div
-          className={cn(
-            "fixed inset-0 bg-background backdrop-blur-md z-40 flex flex-col items-center justify-center border-r border-border",
-            "transition-all duration-300 md:hidden",
-            isMenuOpen
-              ? "opacity-100 pointer-events-auto"
-              : "opacity-0 pointer-events-none"
-          )}
-        >
-          <div className="flex flex-col space-y-8 text-xl">
-            {navItems.map((item, key) => (
-              <a
-                key={key}
-                href={item.href}
-                className="text-foreground/80 hover:text-primary transition-colors duration-300"
-                onClick={() => setIsMenuOpen(false)}
+      {/* mobile menu overlay */}
+      <div
+        className={cn(
+          "fixed inset-0 z-50 md:hidden",
+          isMenuOpen ? "block" : "hidden"
+        )}
+      >
+        {/* Backdrop */}
+        <div 
+          className="absolute inset-0 bg-black/80 backdrop-blur-sm"
+          onClick={() => setIsMenuOpen(false)}
+        />
+        
+        {/* Menu Content */}
+        <div className="relative z-10 flex min-h-screen items-center justify-center p-4">
+          <div className="w-full max-w-sm bg-background rounded-2xl p-6 shadow-2xl border border-border/20">
+            <div className="flex flex-col space-y-4">
+              {navItems.map((item, key) => (
+                <a
+                  key={key}
+                  href={item.href}
+                  className="text-foreground text-lg font-medium hover:text-primary transition-colors duration-300 text-center py-3 px-4 rounded-lg hover:bg-primary/10 block"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  {item.name}
+                </a>
+              ))}
+              
+              {/* Theme Toggle Button - Mobile Only */}
+              <button
+                onClick={toggleTheme}
+                className="sm:hidden text-foreground text-lg font-medium hover:text-primary transition-colors duration-300 text-center py-3 px-4 rounded-lg hover:bg-primary/10 mt-2 border-t border-border/20 pt-6 w-full flex items-center justify-center space-x-2"
               >
-                {item.name}
-              </a>
-            ))}
+                {isDarkMode ? (
+                  <>
+                    <Sun className="h-5 w-5 text-yellow-500" />
+                    <span>Light Mode</span>
+                  </>
+                ) : (
+                  <>
+                    <Moon className="h-5 w-5 text-blue-600" />
+                    <span>Dark Mode</span>
+                  </>
+                )}
+              </button>
+            </div>
           </div>
         </div>
       </div>
