@@ -589,6 +589,53 @@
   @apply bg-background/98 border-border/20;
 }
 
+/* Custom Pointer Animations */
+@keyframes pointer-pulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.2);
+    opacity: 0.8;
+  }
+}
+
+@keyframes pointer-click {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(0.8);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes touch-ripple {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(3);
+    opacity: 0;
+  }
+}
+
+.pointer-pulse {
+  animation: pointer-pulse 2s ease-in-out infinite;
+}
+
+.pointer-click {
+  animation: pointer-click 0.2s ease-in-out;
+}
+
+.touch-ripple {
+  animation: touch-ripple 0.6s ease-out;
+}
+
 /* Stylish name effects - with interactive hover animations */
 .name-aritra {
   @apply italic font-extrabold tracking-wider text-primary cursor-pointer;

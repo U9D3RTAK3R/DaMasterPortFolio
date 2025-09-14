@@ -1,4 +1,5 @@
 import { Navbar } from "../components/Navbar";
+import { CustomPointer } from "../components/CustomPointer";
 import { StarBackground } from "@/components/StarBackground";
 import { CloudBackground } from "@/components/CloudBackground";
 import { HeroSection } from "@/components/HeroSection";
@@ -11,6 +12,8 @@ import { Footer } from "@/components/Footer";
 export const Home = () => {
     return(
         <div className="min-h-screen">
+            {/* Custom Pointer */}
+            <CustomPointer />
             {/* Background Effects */}
             <StarBackground />
             <CloudBackground />
