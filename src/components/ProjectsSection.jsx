@@ -85,19 +85,21 @@ export const ProjectsSection = () => {
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                 
-                {/* Floating action buttons on hover */}
-                <div className="absolute top-4 right-4 flex gap-2 opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0">
+                {/* Floating action buttons - always visible on mobile, hover on desktop */}
+                <div className="absolute top-4 right-4 flex gap-2 md:opacity-0 md:group-hover:opacity-100 opacity-100 transition-all duration-300 transform md:translate-y-2 md:group-hover:translate-y-0 translate-y-0">
                   <a
                     href={project.demoUrl}
                     target="_blank"
-                    className="p-2 bg-white/90 rounded-full text-gray-800 hover:bg-white transition-colors duration-200 glow-on-hover"
+                    className="p-2 bg-white/90 rounded-full text-gray-800 hover:bg-white transition-colors duration-200 glow-on-hover shadow-md"
+                    aria-label="View live demo"
                   >
                     <ExternalLink size={16} />
                   </a>
                   <a
                     href={project.githubUrl}
                     target="_blank"
-                    className="p-2 bg-white/90 rounded-full text-gray-800 hover:bg-white transition-colors duration-200 glow-on-hover"
+                    className="p-2 bg-white/90 rounded-full text-gray-800 hover:bg-white transition-colors duration-200 glow-on-hover shadow-md"
+                    aria-label="View source code"
                   >
                     <Github size={16} />
                   </a>

@@ -82,9 +82,13 @@ export const CustomPointer = () => {
 
     const handleTouchMove = (e) => {
       if (isTouchDevice) {
-        e.preventDefault(); // Prevent scrolling while dragging
-        const touch = e.touches[0];
-        setPosition({ x: touch.clientX, y: touch.clientY });
+        // Only prevent default if we're actively showing the pointer
+        // Allow normal scrolling when pointer is not active
+        if (isVisible && e.touches.length === 1) {
+          const touch = e.touches[0];
+          setPosition({ x: touch.clientX, y: touch.clientY });
+        }
+        // Don't prevent default to allow normal scrolling
       }
     };
 
@@ -104,10 +108,10 @@ export const CustomPointer = () => {
     document.addEventListener('mouseleave', handleMouseLeave, true);
     document.addEventListener('mouseover', handleMouseOver, true);
     
-    // Also add touch events for hybrid devices
-    document.addEventListener('touchstart', handleTouchStart, { passive: false });
-    document.addEventListener('touchmove', handleTouchMove, { passive: false });
-    document.addEventListener('touchend', handleTouchEnd);
+    // Also add touch events for hybrid devices (but allow normal scrolling)
+    document.addEventListener('touchstart', handleTouchStart, { passive: true });
+    document.addEventListener('touchmove', handleTouchMove, { passive: true });
+    document.addEventListener('touchend', handleTouchEnd, { passive: true });
 
     return () => {
       document.removeEventListener('mousemove', handleMouseMove);
