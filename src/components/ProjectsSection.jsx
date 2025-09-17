@@ -15,13 +15,13 @@ const projects = [
   },
   {
     id: 2,
-    title: "Expense Tracker",
+    title: "CSCS Dept. Website",
     description:
-      "MERN Stack expense tracker website for tracking finances.",
+      "MERN Stack website for the CSCS department.",
     image: "/projects/placeholder.png",
     tags: ["MongoDB", "Express.js", "Node.js", "React", "TailWindCSS"],
     demoUrl: "#",
-    githubUrl: "https://github.com/U9D3RTAK3R/DaMasterFinance",
+    githubUrl: "https://github.com/U9D3RTAK3R/DaMasterHack",
   },
   {
     id: 3,
