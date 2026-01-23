@@ -22,7 +22,7 @@ export const Footer = () => {
             {/* Left side - Copyright */}
             <div className="flex flex-col gap-2 text-center md:text-left">
               <p className="text-sm text-muted-foreground">
-                &copy; {new Date().getFullYear()} Arirani. All rights reserved.
+                &copy; {new Date().getFullYear()} A.S. All rights reserved.
               </p>
               
               {/* Fun creative text */}

@@ -27,7 +27,7 @@ const projects = [
     id: 3,
     title: "Cognify",
     description:
-      "Developed Cognify, an AI-powered adaptive learning platform with gamification and educator analytics; won 2nd Prize at GDG TechSprint (TMSL).",
+      "Developed Cognify, an AI-powered adaptive learning platform with gamification and educator analytics.",
     image: "/projects/project3.png",
     tags: ["Flutter", "GoLang", "Firebase", "Gemini API", "Vercel", "GCP"],
     demoUrl: "https://cognify-gdg.vercel.app/",
