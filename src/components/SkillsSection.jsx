@@ -4,21 +4,24 @@ import { useStaggeredAnimation } from "@/hooks/useScrollAnimation";
 import { AnimatedSection } from "./AnimatedSection";
 
 const skills = [
-    {name: "HTML/CSS", level: 60, category: "FrontEnd", icon: "🎨"},
-    {name: "JavaScript", level: 75, category: "FrontEnd", icon: "⚡"},
-    {name: "React", level: 75, category: "FrontEnd", icon: "⚛️"},
-    {name: "TailWind CSS", level: 65, category: "FrontEnd", icon: "🎯"},
+    {name: "HTML/CSS", level: 70, category: "FrontEnd", icon: "🎨"},
+    {name: "JavaScript", level: 80, category: "FrontEnd", icon: "⚡"},
+    {name: "React", level: 80, category: "FrontEnd", icon: "⚛️"},
+    {name: "TailWind CSS", level: 70, category: "FrontEnd", icon: "🎯"},
+    {name: "Flutter", level: 70, category: "FrontEnd", icon: "🏃‍♂️"},
 
-    {name: "MySQL", level: 85, category: "BackEnd", icon: "🗄️"},
-    {name: "MongoDB", level: 80, category: "BackEnd", icon: "🍃"},
+    {name: "MySQL", level: 90, category: "BackEnd", icon: "🗄️"},
+    {name: "MongoDB", level: 85, category: "BackEnd", icon: "🍃"},
+    {name: "FireBase", level: 80, category: "BackEnd", icon: "🔥"},
+    {name: "GoLang", level: 70, category: "BackEnd", icon: "👀"},
 
     {name: "Python", level: 90, category: "Languages", icon: "🐍"},
     {name: "C", level: 85, category: "Languages", icon: "⚙️"},
-    {name: "C++", level: 75, category: "Languages", icon: "🔧"},
-    {name: "Java", level: 85, category: "Languages", icon: "☕"},
+    {name: "C++", level: 80, category: "Languages", icon: "🔧"},
+    {name: "Java", level: 80, category: "Languages", icon: "☕"},
     
     {name: "Git/GitHub", level: 90, category: "Tools", icon: "🔀"},
-    {name: "Figma", level: 65, category: "Tools", icon: "🎨"},
+    {name: "Figma", level: 70, category: "Tools", icon: "🎨"},
     {name: "VS Code", level: 95, category: "Tools", icon: "💻"},
 ];
 

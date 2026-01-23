@@ -15,23 +15,23 @@ const projects = [
   },
   {
     id: 2,
-    title: "CSCS Dept. Website",
+    title: "Smart Ambulance Booking System",
     description:
-      "MERN Stack website for the CSCS department.",
+      "Coming Soon!",
     image: "/projects/placeholder.png",
     tags: ["MongoDB", "Express.js", "Node.js", "React", "TailWindCSS"],
     demoUrl: "#",
-    githubUrl: "https://github.com/U9D3RTAK3R/DaMasterHack",
+    githubUrl: "#",
   },
   {
     id: 3,
-    title: "PlaceHolder",
+    title: "Cognify",
     description:
-      "We used to dream of days like these",
-    image: "/projects/placeholder.png",
-    tags: ["Tag1", "Tag2", "Tag3"],
-    demoUrl: "#",
-    githubUrl: "#",
+      "Developed Cognify, an AI-powered adaptive learning platform with gamification and educator analytics; won 2nd Prize at GDG TechSprint (TMSL).",
+    image: "/projects/project3.png",
+    tags: ["Flutter", "GoLang", "Firebase", "Gemini API", "Vercel", "GCP"],
+    demoUrl: "https://cognify-gdg.vercel.app/",
+    githubUrl: "https://github.com/U9D3RTAK3R/Cognify",
   },
 ];
 
