@@ -1,6 +1,6 @@
-# 🌐 Personal Portfolio Website - v1.4
+# 🌐 Personal Portfolio Website - v1.5
 
-Welcome to the **v1.4** release of my personal portfolio website!  
+Welcome to the **v1.5** release of my personal portfolio website!  
 This project was built using **ReactJS** and **Tailwind CSS** as part of my journey into web development.
 
 ---
