@@ -31,8 +31,8 @@ export const AboutSection = () => {
     <section id="about" className="py-24 px-4 relative overflow-hidden">
       {/* Background decorative elements */}
       <div className="absolute inset-0 pointer-events-none">
-        <div className="floating-element absolute top-10 left-5 w-12 h-12 bg-primary/10 rounded-full" style={{"--delay": "0s"}}></div>
-        <div className="floating-element absolute bottom-20 right-5 w-8 h-8 bg-purple-500/10 rounded-full" style={{"--delay": "2s"}}></div>
+        <div className="floating-element absolute top-10 left-5 w-12 h-12 bg-primary/10 rounded-full" style={{ "--delay": "0s" }}></div>
+        <div className="floating-element absolute bottom-20 right-5 w-8 h-8 bg-purple-500/10 rounded-full" style={{ "--delay": "2s" }}></div>
         <div className="morphing-bg opacity-5"></div>
       </div>
 
@@ -52,7 +52,7 @@ export const AboutSection = () => {
 
               <p className="text-muted-foreground leading-relaxed">
                 Starting out in web development, I specialize
-                in grasping the problem and creating responsive, 
+                in grasping the problem and creating responsive,
                 accessible, and performant web
                 applications using modern technologies.
               </p>
@@ -74,7 +74,7 @@ export const AboutSection = () => {
                 </a>
 
                 <a
-                  href="https://www.linkedin.com/in/aritra-saha-a5ab88311/"
+                  href="https://drive.google.com/file/d/1qyJpY2pWAwlCNdXjAa-HC__Z-Js2G4G3/view?usp=sharing"
                   target="_blank"
                   className="px-6 py-2 rounded-full border border-primary text-primary hover:bg-primary/10 transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-primary/20 glow-on-hover group relative overflow-hidden"
                 >
@@ -101,13 +101,13 @@ export const AboutSection = () => {
                 >
                   {/* Hover effect background */}
                   <div className="absolute inset-0 bg-gradient-to-r from-primary/5 to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                  
+
                   <div className="flex items-start gap-4 relative">
                     <div className="p-3 rounded-full bg-primary/10 group-hover:bg-primary/20 transition-all duration-300 group-hover:scale-110">
                       <IconComponent className="h-6 w-6 text-primary group-hover:text-primary/80 transition-colors duration-300" />
                     </div>
                     <div className="text-left flex-1">
-                      <h4 className="font-semibold text-lg group-hover:text-primary transition-colors duration-300"> 
+                      <h4 className="font-semibold text-lg group-hover:text-primary transition-colors duration-300">
                         {feature.title}
                       </h4>
                       <p className="text-muted-foreground group-hover:text-foreground/80 transition-colors duration-300">

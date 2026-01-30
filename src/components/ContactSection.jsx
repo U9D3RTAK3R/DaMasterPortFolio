@@ -5,13 +5,11 @@ import {
   MapPin,
   Phone,
   Send,
-  Twitch,
-  Twitter,
 } from "lucide-react";
-import { SiDiscord } from "react-icons/si";
+import { SiDiscord, SiWhatsapp } from "react-icons/si";
 import { cn } from "@/lib/utils";
 import { useToast } from "@/hooks/use-toast";
-import { useState, useRef  } from "react";
+import { useState, useRef } from "react";
 import emailjs from "@emailjs/browser";
 import { AnimatedSection } from "./AnimatedSection";
 
@@ -108,9 +106,9 @@ export const ContactSection = () => {
                 </div>
                 <div>
                   <h4 className="font-medium"> Location</h4>
-                  <a href="https://maps.app.goo.gl/yrHGqJQG694eo2Dn6" 
-                     target="_blank"
-                     className="text-muted-foreground hover:text-primary transition-colors">
+                  <a href="https://maps.app.goo.gl/yrHGqJQG694eo2Dn6"
+                    target="_blank"
+                    className="text-muted-foreground hover:text-primary transition-colors">
                     Kolkata, WB, India
                   </a>
                 </div>
@@ -120,25 +118,21 @@ export const ContactSection = () => {
             <div className="pt-8">
               <h4 className="font-medium mb-4"> Connect With Me</h4>
               <div className="flex space-x-4 justify-center">
-                <a href="https://www.linkedin.com/in/aritra-saha-a5ab88311/" target="_blank" 
-                   className="group p-2 rounded-full transition-all duration-300 hover:bg-blue-500/10 hover:scale-110 hover:-translate-y-1">
+                <a href="https://www.linkedin.com/in/aritra-saha-a5ab88311/" target="_blank"
+                  className="group p-2 rounded-full transition-all duration-300 hover:bg-blue-500/10 hover:scale-110 hover:-translate-y-1">
                   <Linkedin className="transition-all duration-300 group-hover:text-blue-500 group-hover:drop-shadow-lg" />
                 </a>
-                <a href="#" target="_blank"
-                   className="group p-2 rounded-full transition-all duration-300 hover:bg-sky-500/10 hover:scale-110 hover:-translate-y-1">
-                  <Twitter className="transition-all duration-300 group-hover:text-sky-500 group-hover:drop-shadow-lg" />
-                </a>
                 <a href="https://www.instagram.com/u.n.d.e.r.t.a.k.e.r_07/" target="_blank"
-                   className="group p-2 rounded-full transition-all duration-300 hover:bg-pink-500/10 hover:scale-110 hover:-translate-y-1">
+                  className="group p-2 rounded-full transition-all duration-300 hover:bg-pink-500/10 hover:scale-110 hover:-translate-y-1">
                   <Instagram className="transition-all duration-300 group-hover:text-pink-500 group-hover:drop-shadow-lg" />
                 </a>
-                <a href="#" target="_blank"
-                   className="group p-2 rounded-full transition-all duration-300 hover:bg-purple-500/10 hover:scale-110 hover:-translate-y-1">
-                  <Twitch className="transition-all duration-300 group-hover:text-purple-500 group-hover:drop-shadow-lg" />
-                </a>
                 <a href="https://discord.com/users/725581368343658568/" target="_blank"
-                   className="group p-2 rounded-full transition-all duration-300 hover:bg-indigo-500/10 hover:scale-110 hover:-translate-y-1">
+                  className="group p-2 rounded-full transition-all duration-300 hover:bg-indigo-500/10 hover:scale-110 hover:-translate-y-1">
                   <SiDiscord className="transition-all duration-300 group-hover:text-indigo-500 group-hover:drop-shadow-lg" />
+                </a>
+                <a href="https://wa.me/919007402066" target="_blank"
+                  className="group p-2 rounded-full transition-all duration-300 hover:bg-green-500/10 hover:scale-110 hover:-translate-y-1">
+                  <SiWhatsApp className="transition-all duration-300 group-hover:text-green-500 group-hover:drop-shadow-lg" />
                 </a>
               </div>
             </div>
@@ -204,7 +198,7 @@ export const ContactSection = () => {
               </div>
 
               <button
-                style={{cursor:'pointer'}}
+                style={{ cursor: 'pointer' }}
                 type="submit"
                 disabled={isSubmitting}
                 className={cn(

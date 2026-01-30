@@ -15,22 +15,12 @@ const projects = [
   },
   {
     id: 2,
-    title: "Smart Ambulance Booking System",
-    description:
-      "Coming Soon!",
-    image: "/projects/placeholder.png",
-    tags: ["MongoDB", "Express.js", "Node.js", "React", "TailWindCSS"],
-    demoUrl: "#",
-    githubUrl: "#",
-  },
-  {
-    id: 3,
     title: "Cognify",
     description:
       "Developed Cognify, an AI-powered adaptive learning platform with gamification and educator analytics.",
     image: "/projects/project3.png",
     tags: ["Flutter", "GoLang", "Firebase", "Gemini API", "Vercel", "GCP"],
-    demoUrl: "https://cognify-gdg.vercel.app/",
+    demoUrl: "https://cognify.localplayer.dev/",
     githubUrl: "https://github.com/U9D3RTAK3R/Cognify",
   },
 ];
@@ -45,8 +35,8 @@ export const ProjectsSection = () => {
     <section id="projects" className="py-24 px-4 relative overflow-hidden">
       {/* Background decorative elements */}
       <div className="absolute inset-0 pointer-events-none">
-        <div className="floating-element absolute top-20 right-20 w-16 h-16 bg-gradient-to-r from-primary/10 to-purple-500/10 rounded-full" style={{"--delay": "1s"}}></div>
-        <div className="floating-element absolute bottom-40 left-10 w-24 h-24 bg-gradient-to-r from-pink-500/10 to-primary/10 rounded-full" style={{"--delay": "3s"}}></div>
+        <div className="floating-element absolute top-20 right-20 w-16 h-16 bg-gradient-to-r from-primary/10 to-purple-500/10 rounded-full" style={{ "--delay": "1s" }}></div>
+        <div className="floating-element absolute bottom-40 left-10 w-24 h-24 bg-gradient-to-r from-pink-500/10 to-primary/10 rounded-full" style={{ "--delay": "3s" }}></div>
       </div>
 
       <div className="container mx-auto max-w-5xl">
@@ -84,7 +74,7 @@ export const ProjectsSection = () => {
                   className="w-full h-full object-cover transition-all duration-700 group-hover:scale-110 parallax-element"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                
+
                 {/* Floating action buttons - always visible on mobile, hover on desktop */}
                 <div className="absolute top-4 right-4 flex gap-2 md:opacity-0 md:group-hover:opacity-100 opacity-100 transition-all duration-300 transform md:translate-y-2 md:group-hover:translate-y-0 translate-y-0">
                   <a
@@ -109,7 +99,7 @@ export const ProjectsSection = () => {
               <div className="p-6 relative">
                 <div className="flex flex-wrap gap-2 mb-4">
                   {project.tags.map((tag, tagIndex) => (
-                    <span 
+                    <span
                       key={tagIndex}
                       className="px-3 py-1 text-xs font-medium border rounded-full bg-secondary/50 text-secondary-foreground transition-all duration-300 hover:bg-primary/20 hover:border-primary/50 hover:scale-105"
                     >
@@ -118,7 +108,7 @@ export const ProjectsSection = () => {
                   ))}
                 </div>
 
-                <h3 className="text-xl font-semibold mb-2 group-hover:text-primary transition-colors duration-300"> 
+                <h3 className="text-xl font-semibold mb-2 group-hover:text-primary transition-colors duration-300">
                   {project.title}
                 </h3>
                 <p className="text-muted-foreground text-sm mb-6 line-clamp-3">
@@ -129,7 +119,7 @@ export const ProjectsSection = () => {
           ))}
         </div>
 
-        <AnimatedSection 
+        <AnimatedSection
           className="text-center mt-12"
           animationType="bounce-in"
           delay={600}
@@ -139,7 +129,7 @@ export const ProjectsSection = () => {
             target="_blank"
             href="https://github.com/U9D3RTAK3R"
           >
-            Check My Github 
+            Check My Github
             <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
           </a>
         </AnimatedSection>
