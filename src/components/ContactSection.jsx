@@ -132,7 +132,7 @@ export const ContactSection = () => {
                 </a>
                 <a href="https://wa.me/919007402066" target="_blank"
                   className="group p-2 rounded-full transition-all duration-300 hover:bg-green-500/10 hover:scale-110 hover:-translate-y-1">
-                  <SiWhatsApp className="transition-all duration-300 group-hover:text-green-500 group-hover:drop-shadow-lg" />
+                  <SiWhatsapp className="transition-all duration-300 group-hover:text-green-500 group-hover:drop-shadow-lg" />
                 </a>
               </div>
             </div>
