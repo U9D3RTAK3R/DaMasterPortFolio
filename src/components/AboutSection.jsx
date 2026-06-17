@@ -107,11 +107,7 @@ export const AboutSection = () => {
               <a href="#contact" className="cyber-button">
                 CONNECT
               </a>
-              <a
-                href="/resume.pdf"
-                download
-                className="cyber-button cyber-button-gold"
-              >
+              <a href="#resume" className="cyber-button cyber-button-gold">
                 <svg
                   width="14"
                   height="14"

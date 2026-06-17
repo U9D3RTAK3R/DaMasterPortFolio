@@ -15,7 +15,7 @@ const msgs = [
 const colors = ["#00d4ff", "#ff00e6", "#ffd700", "#00fff0", "#ff4488"];
 
 const responses = {
-  help: "available: whoami  ls  pwd  uptime  sudo  date  matrix  42  creds",
+  help: "available: whoami  ls  pwd  uptime  sudo  date  matrix  67  creds  clear  exit",
   whoami: "aritra",
   ls: "about  experience  projects  skills  achievements  resume  contact",
   pwd: "/home/aritra/portfolio",
@@ -25,6 +25,7 @@ const responses = {
   matrix: "follow the white rabbit and you shall face an ending like Subaru",
   67: "the answer to life, the universe, and everything.",
   creds: "you found the secret. but did you find the secret to life?",
+  "sudo rm matrix": "matrix.exe terminated. reality restored.",
 };
 
 export const Footer = () => {
@@ -37,6 +38,16 @@ export const Footer = () => {
   const inputRef = useRef(null);
   const [key, setKey] = useState(0);
   const [matrix, setMatrix] = useState(false);
+
+  const activateMatrix = () => {
+    setMatrix(true);
+    document.documentElement.classList.add("matrix-active");
+  };
+
+  const deactivateMatrix = () => {
+    setMatrix(false);
+    document.documentElement.classList.remove("matrix-active");
+  };
 
   useEffect(() => {
     if (!matrix) return;
@@ -56,15 +67,33 @@ export const Footer = () => {
     if (e.key !== "Enter") return;
     const cmd = input.trim().toLowerCase();
     if (!cmd) return;
+
+    if (cmd === "clear") {
+      setOut("");
+      setInput("");
+      return;
+    }
+    if (cmd === "exit") {
+      deactivateMatrix();
+      setOut("");
+      setShowInput(false);
+      setInput("");
+      return;
+    }
+    if (cmd === "sudo rm matrix") {
+      deactivateMatrix();
+      setOut(`$ ${cmd}\n> matrix.exe terminated. reality restored.`);
+      setInput("");
+      return;
+    }
+
     const res =
       typeof responses[cmd] === "function"
         ? responses[cmd]()
         : responses[cmd] || `unknown: ${cmd}`;
     setOut(`$ ${cmd}\n> ${res}`);
     setInput("");
-    if (cmd === "matrix") setMatrix(true);
-    if (cmd === "exit") setMatrix(false);
-    setTimeout(() => setOut(""), 5000);
+    if (cmd === "matrix") activateMatrix();
   };
 
   return (
@@ -181,11 +210,6 @@ export const Footer = () => {
                 }}
               />
               <span className={glitch ? "ft-glitch" : ""}>{msgs[i]}</span>
-              <span
-                style={{ color: "rgba(136,136,170,0.3)", fontSize: "0.55rem" }}
-              >
-                [click]
-              </span>
             </div>
 
             {/* ASNI ART */}
@@ -194,14 +218,14 @@ export const Footer = () => {
                 fontFamily: "'Share Tech Mono', monospace",
                 fontSize: "0.35rem",
                 lineHeight: 1.2,
-                color: "rgba(0,212,255,0.12)",
+                color: "rgba(0,212,255,0.35)",
                 textAlign: "center",
                 margin: 0,
                 userSelect: "none",
               }}
             >
               {`  ╔══ DA_MASTER_PORTFOLIO ══╗
-  ║  ⚡ v3.0  ACTIVE        ║`}
+  ║  ⚡ v2.0  ACTIVE        ║`}
             </pre>
 
             {/* HIDDEN TERMINAL — double-click copyright to reveal */}
@@ -273,7 +297,7 @@ export const Footer = () => {
               onDoubleClick={() => setShowInput((s) => !s)}
               title="double-click"
             >
-              Made with Pain and Suffering 0_0)b A.S.
+              Made with Pain and Suffering O_O)b A.S.
             </p>
             <p
               style={{
@@ -294,7 +318,7 @@ export const Footer = () => {
                 letterSpacing: "0.05em",
               }}
             >
-              Icons by
+              Icons by{" "}
               <a
                 href="https://www.flaticon.com/free-animated-icons/"
                 target="_blank"

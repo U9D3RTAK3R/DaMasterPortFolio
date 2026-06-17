@@ -304,7 +304,7 @@ export const SkillsGraph = () => {
           <div key={cat} style={{
             display: 'flex', alignItems: 'center', gap: 5,
             fontFamily: "'Share Tech Mono',monospace",
-            fontSize: '0.4rem', fontWeight: 600,
+            fontSize: '0.55rem', fontWeight: 600,
             color: '#8888aa', letterSpacing: '0.08em',
           }}>
             <span style={{
@@ -319,7 +319,7 @@ export const SkillsGraph = () => {
       <div style={{
         position: 'absolute', top: 0, right: 0, zIndex: 5,
         fontFamily: "'Share Tech Mono',monospace",
-        fontSize: '0.4rem', color: '#8888aa',
+        fontSize: '0.55rem', color: '#8888aa',
         letterSpacing: '0.05em', textAlign: 'right',
         lineHeight: 1.6,
       }}>

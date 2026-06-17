@@ -171,7 +171,7 @@ export const HeroSection = () => {
                   textShadow: "0 0 10px rgba(255,0,230,0.3)",
                 }}
               >
-                {"<"}FULL-STACK {"/>"} {"<"}ML {"/>"} {"<"}UI/UX {"/>"}
+                {"<"}FULL-STACK {"/>"} {"<"}OTAKU {"/>"} {"<"}UI/UX {"/>"}
               </p>
             </AnimatedSection>
 

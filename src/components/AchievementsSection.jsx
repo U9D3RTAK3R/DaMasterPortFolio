@@ -55,6 +55,7 @@ export const AchievementsSection = () => {
           {achievements.map((ach, i) => (
             <motion.div
               key={i}
+              style={{ display: "flex" }}
               initial={{ opacity: 0, y: 25 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -64,7 +65,7 @@ export const AchievementsSection = () => {
                 ease: [0.25, 0.1, 0.25, 1],
               }}
             >
-              <div className="cyber-ach" style={{ textAlign: "left" }}>
+                <div className="cyber-ach" style={{ textAlign: "left", height: "100%", display: "flex", flexDirection: "column" }}>
                 <div
                   style={{
                     display: "flex",
@@ -91,6 +92,7 @@ export const AchievementsSection = () => {
                     fontSize: "0.95rem",
                     color: "#8888aa",
                     lineHeight: 1.6,
+                    flex: 1,
                   }}
                 >
                   {ach.desc}

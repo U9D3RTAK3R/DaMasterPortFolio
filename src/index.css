@@ -732,3 +732,91 @@ body::before {
   .skills-grid { grid-template-columns: 1fr !important; }
   .cert-grid { grid-template-columns: 1fr !important; }
 }
+
+/* ===== MATRIX EASTER EGG ===== */
+html.matrix-active .cyber-card,
+html.matrix-active .cyber-exp,
+html.matrix-active .cyber-ach,
+html.matrix-active .cyber-stat {
+  animation: matrix-glitch-card 3s ease-in-out infinite;
+}
+html.matrix-active .cyber-card:nth-child(2n),
+html.matrix-active .cyber-exp:nth-child(2n),
+html.matrix-active .cyber-ach:nth-child(2n),
+html.matrix-active .cyber-stat:nth-child(2n) {
+  animation-delay: -1s;
+}
+html.matrix-active .cyber-card:nth-child(3n),
+html.matrix-active .cyber-exp:nth-child(3n),
+html.matrix-active .cyber-ach:nth-child(3n),
+html.matrix-active .cyber-stat:nth-child(3n) {
+  animation-delay: -2s;
+}
+
+html.matrix-active .section-title {
+  animation: matrix-glitch-text 4s ease-in-out infinite;
+}
+html.matrix-active .section-title:nth-child(2n) {
+  animation-delay: -2s;
+}
+
+html.matrix-active img {
+  animation: matrix-glitch-img 5s ease-in-out infinite;
+}
+
+html.matrix-active .neon-text,
+html.matrix-active .neon-magenta-text,
+html.matrix-active .neon-gold-text {
+  animation: matrix-glitch-neon 3s ease-in-out infinite alternate;
+}
+
+html.matrix-active .cyber-button {
+  animation: matrix-glitch-btn 2s ease-in-out infinite;
+}
+
+html.matrix-active::after {
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0,255,65,0.04) 2px,
+    rgba(0,255,65,0.04) 4px
+  ) !important;
+}
+
+html.matrix-active::before {
+  opacity: 0.08 !important;
+}
+
+@keyframes matrix-glitch-card {
+  0%, 95%, 100% { transform: none; opacity: 1; }
+  96% { transform: translate(-3px, 1px) scale(1.005); opacity: 0.85; }
+  97% { transform: translate(3px, -1px) scale(0.995); opacity: 0.9; }
+  98% { transform: translate(-1px, 2px) scale(1.01); opacity: 0.8; }
+}
+
+@keyframes matrix-glitch-text {
+  0%, 97%, 100% { transform: none; letter-spacing: inherit; }
+  98% { transform: translate(-2px, 0); letter-spacing: 0.05em; color: #00ff41; }
+  99% { transform: translate(2px, 0); letter-spacing: -0.02em; color: #0aff; }
+}
+
+@keyframes matrix-glitch-img {
+  0%, 96%, 100% { transform: none; filter: none; }
+  97% { transform: translate(-2px, 1px) scaleX(-1); filter: hue-rotate(90deg); }
+  98% { transform: translate(2px, -1px); filter: hue-rotate(-90deg); }
+  99% { transform: translate(-1px, 0) scaleX(-1); filter: invert(0.2); }
+}
+
+@keyframes matrix-glitch-neon {
+  0% { opacity: 1; text-shadow: inherit; }
+  50% { opacity: 1; text-shadow: 0 0 3px #00ff41, 0 0 8px #00ff41; color: #00ff41; }
+  100% { opacity: 1; text-shadow: inherit; }
+}
+
+@keyframes matrix-glitch-btn {
+  0%, 95%, 100% { transform: none; opacity: 1; }
+  96% { transform: translate(-1px, 0); opacity: 0.9; }
+  97% { transform: translate(2px, 1px); opacity: 0.8; }
+  98% { transform: translate(-2px, -1px); opacity: 0.95; }
+}

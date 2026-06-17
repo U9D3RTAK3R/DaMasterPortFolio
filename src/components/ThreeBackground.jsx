@@ -124,9 +124,16 @@ function Scene() {
   )
 }
 
-export default function ThreeBackground() {
+export default function ThreeBackground({ hidden }) {
   return (
-    <div className="fixed inset-0 pointer-events-none z-0">
+    <div style={{
+      position: 'fixed',
+      inset: 0,
+      pointerEvents: 'none',
+      zIndex: 0,
+      opacity: hidden ? 0 : 1,
+      transition: 'opacity 1s ease',
+    }}>
       <Canvas
         camera={{ position: [0, 0, 8], fov: 60 }}
         dpr={[1, 1.5]}

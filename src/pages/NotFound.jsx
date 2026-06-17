@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import { CustomPointer } from '../components/CustomPointer'
 
 export const NotFound = () => {
   return (
@@ -11,6 +12,7 @@ export const NotFound = () => {
       background: '#06060e',
       gap: '2rem',
     }}>
+      <CustomPointer />
       <div className="cyber-term" style={{ maxWidth: 600, width: '100%' }}>
         <div className="cyber-term-bar">
           <span className="cyber-term-dot r" />
