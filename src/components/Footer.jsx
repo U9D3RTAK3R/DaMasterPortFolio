@@ -1,84 +1,332 @@
-import { ArrowUp, Heart, Code, Coffee } from "lucide-react";
+import { useState, useRef, useEffect } from "react";
 import { AnimatedSection } from "./AnimatedSection";
-import { useState } from "react";
+
+const msgs = [
+  "SYSTEM.ONLINE",
+  "HACK.THE.PLANET",
+  "ACCESS.GRANTED",
+  "SHELL.ACTIVE",
+  "GHOST.MODE",
+  "FIREWALL.BYPASSED",
+  "NEURAL.LINK.UP",
+  "DEEPER.STILL",
+];
+
+const colors = ["#00d4ff", "#ff00e6", "#ffd700", "#00fff0", "#ff4488"];
+
+const responses = {
+  help: "available: whoami  ls  pwd  uptime  sudo  date  matrix  42  creds",
+  whoami: "aritra",
+  ls: "about  experience  projects  skills  achievements  resume  contact",
+  pwd: "/home/aritra/portfolio",
+  uptime: "3.14 days of continuous uptime. no crashes. no sleep. no sanity.",
+  sudo: "nice try, bish.",
+  date: () => new Date().toLocaleString(),
+  matrix: "follow the white rabbit and you shall face an ending like Subaru",
+  67: "the answer to life, the universe, and everything.",
+  creds: "you found the secret. but did you find the secret to life?",
+};
 
 export const Footer = () => {
-  const [isHeartHovered, setIsHeartHovered] = useState(false);
-  const [isCoffeeHovered, setIsCoffeeHovered] = useState(false);
+  const [i, setI] = useState(0);
+  const [glitch, setGlitch] = useState(false);
+  const [dotC, setDotC] = useState(colors[0]);
+  const [out, setOut] = useState("");
+  const [showInput, setShowInput] = useState(false);
+  const [input, setInput] = useState("");
+  const inputRef = useRef(null);
+  const [key, setKey] = useState(0);
+  const [matrix, setMatrix] = useState(false);
+
+  useEffect(() => {
+    if (!matrix) return;
+    const interval = setInterval(() => setKey((k) => k + 1), 50);
+    return () => clearInterval(interval);
+  }, [matrix]);
+
+  const cycle = () => {
+    setGlitch(true);
+    setTimeout(() => {
+      setI((j) => (j + 1) % msgs.length);
+      setGlitch(false);
+    }, 180);
+  };
+
+  const handleCmd = (e) => {
+    if (e.key !== "Enter") return;
+    const cmd = input.trim().toLowerCase();
+    if (!cmd) return;
+    const res =
+      typeof responses[cmd] === "function"
+        ? responses[cmd]()
+        : responses[cmd] || `unknown: ${cmd}`;
+    setOut(`$ ${cmd}\n> ${res}`);
+    setInput("");
+    if (cmd === "matrix") setMatrix(true);
+    if (cmd === "exit") setMatrix(false);
+    setTimeout(() => setOut(""), 5000);
+  };
 
   return (
-    <AnimatedSection animationType="slide-up">
-      <footer className="py-12 px-4 bg-card relative border-t border-border mt-12 overflow-hidden">
-        {/* Floating background elements */}
-        <div className="absolute inset-0 pointer-events-none">
-          <div className="floating-element absolute top-4 left-10 w-2 h-2 bg-primary/20 rounded-full" style={{"--delay": "0s"}}></div>
-          <div className="floating-element absolute bottom-6 right-20 w-3 h-3 bg-purple-500/20 rounded-full" style={{"--delay": "2s"}}></div>
-          <div className="floating-element absolute top-8 right-10 w-1 h-1 bg-pink-500/30 rounded-full" style={{"--delay": "1s"}}></div>
-        </div>
+    <AnimatedSection animationType="fade-up">
+      <footer
+        style={{
+          padding: "2.5rem 1rem",
+          borderTop: "1px solid rgba(0,212,255,0.06)",
+          position: "relative",
+          overflow: "hidden",
+        }}
+        onClick={() => {
+          if (inputRef.current) inputRef.current.focus();
+        }}
+      >
+        <div
+          style={{
+            position: "absolute",
+            inset: 0,
+            background:
+              "repeating-linear-gradient(90deg, transparent, transparent 30px, rgba(0,212,255,0.01) 30px, rgba(0,212,255,0.01) 31px)",
+            pointerEvents: "none",
+          }}
+        />
 
-        <div className="container mx-auto">
-          {/* Main footer content */}
-          <div className="flex flex-col md:flex-row justify-between items-center gap-6">
-            {/* Left side - Copyright */}
-            <div className="flex flex-col gap-2 text-center md:text-left">
-              <p className="text-sm text-muted-foreground">
-                &copy; {new Date().getFullYear()} A.S. All rights reserved.
-              </p>
-              
-              {/* Fun creative text */}
-              <div className="flex items-center gap-2 text-xs text-muted-foreground/80">
-                <span>Made with</span>
-                <div 
-                  className="group cursor-pointer transition-all duration-300 hover:scale-110"
-                  onMouseEnter={() => setIsHeartHovered(true)}
-                  onMouseLeave={() => setIsHeartHovered(false)}
-                >
-                  <Heart 
-                    size={12} 
-                    className={`transition-all duration-300 ${
-                      isHeartHovered 
-                        ? 'text-red-500 fill-red-500 animate-pulse' 
-                        : 'text-primary'
-                    }`}
-                  />
-                </div>
-                <span>& lots of</span>
-                <div 
-                  className="group cursor-pointer transition-all duration-300 hover:scale-110"
-                  onMouseEnter={() => setIsCoffeeHovered(true)}
-                  onMouseLeave={() => setIsCoffeeHovered(false)}
-                >
-                  <Coffee 
-                    size={12} 
-                    className={`transition-all duration-300 ${
-                      isCoffeeHovered 
-                        ? 'text-amber-600 animate-bounce' 
-                        : 'text-primary'
-                    }`}
-                  />
-                </div>
-                <span>by a student</span>
-              </div>
-              
-              <div className="flex items-center gap-1 text-xs text-muted-foreground/60">
-                <Code size={10} className="text-primary" />
-                <span>Crafted with React & TailwindCSS</span>
-              </div>
-            </div>
-
-            {/* Right side - Back to top button */}
-            <div className="flex flex-col items-center gap-2">
-              <span className="text-xs text-muted-foreground/60 animate-pulse">Back to top</span>
-              <a
-                href="#hero"
-                className="group p-3 rounded-full bg-primary/10 hover:bg-primary/20 text-primary transition-all duration-300 hover:scale-110 hover:-translate-y-1 glow-on-hover relative overflow-hidden"
+        {matrix && (
+          <div
+            style={{
+              position: "absolute",
+              inset: 0,
+              pointerEvents: "none",
+              color: "#00d4ff",
+              fontFamily: "'Share Tech Mono', monospace",
+              fontSize: "0.4rem",
+              opacity: 0.12,
+              overflow: "hidden",
+              lineHeight: "1.2",
+            }}
+            key={key}
+          >
+            {Array.from({ length: 80 }, (_, col) => (
+              <span
+                key={col}
+                style={{
+                  position: "absolute",
+                  top: `${Math.random() * 100}%`,
+                  left: `${(col / 80) * 100}%`,
+                  writingMode: "vertical-rl",
+                  animation: `matrix-fall ${2 + Math.random() * 3}s linear infinite`,
+                  animationDelay: `${Math.random() * 2}s`,
+                }}
               >
-                <ArrowUp size={20} className="transition-transform group-hover:-translate-y-1" />
-                <div className="absolute inset-0 bg-gradient-to-r from-primary/10 to-purple-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-full"></div>
-              </a>
+                {String.fromCharCode(0x30a0 + Math.random() * 96)}
+              </span>
+            ))}
+          </div>
+        )}
+
+        <div
+          className="cyber-container"
+          style={{ position: "relative", zIndex: 1 }}
+        >
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              gap: "0.75rem",
+            }}
+          >
+            {/* CLICKABLE STATUS BADGE */}
+            <div
+              onClick={cycle}
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: 8,
+                fontFamily: "'Share Tech Mono', monospace",
+                fontSize: "0.7rem",
+                color: "#8888aa",
+                letterSpacing: "0.1em",
+                cursor: "pointer",
+                userSelect: "none",
+                padding: "4px 12px",
+                borderRadius: 4,
+                border: "1px solid rgba(0,212,255,0.08)",
+                transition: "all 0.25s",
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.borderColor = "rgba(0,212,255,0.25)";
+                e.currentTarget.style.background = "rgba(0,212,255,0.04)";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.borderColor = "rgba(0,212,255,0.08)";
+                e.currentTarget.style.background = "transparent";
+              }}
+              title="click me"
+            >
+              <span
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setDotC(colors[Math.floor(Math.random() * colors.length)]);
+                }}
+                style={{
+                  width: 6,
+                  height: 6,
+                  borderRadius: "50%",
+                  background: dotC,
+                  display: "inline-block",
+                  boxShadow: `0 0 8px ${dotC}`,
+                  animation: "pulse-ft 2s infinite",
+                  cursor: "pointer",
+                  transition: "all 0.3s",
+                }}
+              />
+              <span className={glitch ? "ft-glitch" : ""}>{msgs[i]}</span>
+              <span
+                style={{ color: "rgba(136,136,170,0.3)", fontSize: "0.55rem" }}
+              >
+                [click]
+              </span>
             </div>
+
+            {/* ASNI ART */}
+            <pre
+              style={{
+                fontFamily: "'Share Tech Mono', monospace",
+                fontSize: "0.35rem",
+                lineHeight: 1.2,
+                color: "rgba(0,212,255,0.12)",
+                textAlign: "center",
+                margin: 0,
+                userSelect: "none",
+              }}
+            >
+              {`  ╔══ DA_MASTER_PORTFOLIO ══╗
+  ║  ⚡ v3.0  ACTIVE        ║`}
+            </pre>
+
+            {/* HIDDEN TERMINAL — double-click copyright to reveal */}
+            {showInput && (
+              <div
+                style={{
+                  fontFamily: "'Share Tech Mono', monospace",
+                  fontSize: "0.6rem",
+                  color: "#00d4ff",
+                  width: "100%",
+                  maxWidth: 320,
+                }}
+              >
+                {out && (
+                  <pre
+                    style={{
+                      margin: "0 0 4px 0",
+                      whiteSpace: "pre-wrap",
+                      color: "#8888aa",
+                      fontSize: "0.55rem",
+                    }}
+                  >
+                    {out}
+                  </pre>
+                )}
+                <div style={{ display: "flex", alignItems: "center", gap: 4 }}>
+                  <span style={{ color: "#00d4ff" }}>$</span>
+                  <input
+                    ref={inputRef}
+                    value={input}
+                    onChange={(e) => setInput(e.target.value)}
+                    onKeyDown={handleCmd}
+                    style={{
+                      background: "transparent",
+                      border: "none",
+                      borderBottom: "1px solid rgba(0,212,255,0.2)",
+                      outline: "none",
+                      color: "#e0e0ff",
+                      fontFamily: "'Share Tech Mono', monospace",
+                      fontSize: "0.6rem",
+                      flex: 1,
+                      padding: "2px 4px",
+                    }}
+                    placeholder="type help..."
+                    spellCheck={false}
+                    autoComplete="off"
+                  />
+                </div>
+              </div>
+            )}
+
+            <div
+              style={{
+                height: 1,
+                width: 120,
+                background: "rgba(0,212,255,0.08)",
+                margin: "0.2rem 0",
+              }}
+            />
+
+            <p
+              style={{
+                fontFamily: "'Share Tech Mono', monospace",
+                fontSize: "0.95rem",
+                color: "#8888aa",
+                cursor: "pointer",
+                userSelect: "none",
+              }}
+              onDoubleClick={() => setShowInput((s) => !s)}
+              title="double-click"
+            >
+              Made with Pain and Suffering 0_0)b A.S.
+            </p>
+            <p
+              style={{
+                fontFamily: "'Rajdhani', sans-serif",
+                fontSize: "0.9rem",
+                color: "rgba(136,136,170,0.5)",
+              }}
+            >
+              {matrix
+                ? "> red pill swallowed. reality is optional."
+                : "Powered to you by React, Three.js & Electric Neon"}
+            </p>
+            <p
+              style={{
+                fontFamily: "'Share Tech Mono', monospace",
+                fontSize: "0.5rem",
+                color: "rgba(136,136,170,0.25)",
+                letterSpacing: "0.05em",
+              }}
+            >
+              Icons by
+              <a
+                href="https://www.flaticon.com/free-animated-icons/"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{ color: "rgba(0,212,255,0.4)" }}
+              >
+                Freepik - Flaticon
+              </a>
+            </p>
           </div>
         </div>
+
+        <style>{`
+          @keyframes pulse-ft {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.4; transform: scale(0.8); }
+          }
+          .ft-glitch {
+            animation: ft-glitch-fx 0.18s ease-in-out;
+          }
+          @keyframes ft-glitch-fx {
+            0% { opacity: 1; transform: translate(0); }
+            25% { opacity: 0.6; transform: translate(-2px, 1px); }
+            50% { opacity: 0.8; transform: translate(2px, -1px); }
+            75% { opacity: 0.7; transform: translate(-1px, 2px); }
+            100% { opacity: 1; transform: translate(0); }
+          }
+          @keyframes matrix-fall {
+            0% { transform: translateY(-100vh); opacity: 1; }
+            100% { transform: translateY(100vh); opacity: 0; }
+          }
+        `}</style>
       </footer>
     </AnimatedSection>
   );

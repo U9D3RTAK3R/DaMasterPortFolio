@@ -1,71 +1,117 @@
-import { useScrollAnimation } from '@/hooks/useScrollAnimation';
-import { cn } from '@/lib/utils';
+import { motion } from 'framer-motion'
+import { useInView } from 'framer-motion'
+import { useRef } from 'react'
+import { cn } from '@/lib/utils'
 
-export const AnimatedSection = ({ 
-  children, 
-  className = '', 
-  animationType = 'slide-up',
+const variants = {
+  'fade-up': {
+    hidden: { opacity: 0, y: 40 },
+    visible: { opacity: 1, y: 0 },
+  },
+  'fade-left': {
+    hidden: { opacity: 0, x: 40 },
+    visible: { opacity: 1, x: 0 },
+  },
+  'fade-right': {
+    hidden: { opacity: 0, x: -40 },
+    visible: { opacity: 1, x: 0 },
+  },
+  'scale-in': {
+    hidden: { opacity: 0, scale: 0.9 },
+    visible: { opacity: 1, scale: 1 },
+  },
+  'bounce-in': {
+    hidden: { opacity: 0, scale: 0.7, y: 30 },
+    visible: {
+      opacity: 1,
+      scale: 1,
+      y: 0,
+      transition: { type: 'spring', bounce: 0.4, duration: 0.8 },
+    },
+  },
+  terminal: {
+    hidden: { clipPath: 'inset(0 100% 0 0)', opacity: 0 },
+    visible: {
+      clipPath: 'inset(0 0% 0 0)',
+      opacity: 1,
+      transition: { duration: 0.8, ease: [0.25, 0.1, 0.25, 1] },
+    },
+  },
+  'slide-graph': {
+    hidden: { opacity: 0, y: 25 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.6, ease: [0.35, 0.1, 0.25, 1] },
+    },
+  },
+}
+
+export const AnimatedSection = ({
+  children,
+  className,
+  animationType = 'fade-up',
   delay = 0,
-  ...props 
+  once = true,
 }) => {
-  const [ref, isVisible] = useScrollAnimation({ threshold: 0.15 });
-
-  const getAnimationClass = () => {
-    switch (animationType) {
-      case 'slide-up':
-        return 'opacity-0 translate-y-8';
-      case 'slide-left':
-        return 'opacity-0 translate-x-8';
-      case 'slide-right':
-        return 'opacity-0 -translate-x-8';
-      case 'scale-in':
-        return 'opacity-0 scale-95';
-      case 'fade-in':
-        return 'opacity-0';
-      case 'bounce-in':
-        return 'opacity-0 scale-90 translate-y-4';
-      default:
-        return 'opacity-0 translate-y-8';
-    }
-  };
-
-  const getVisibleClass = () => {
-    switch (animationType) {
-      case 'slide-up':
-        return 'opacity-100 translate-y-0';
-      case 'slide-left':
-        return 'opacity-100 translate-x-0';
-      case 'slide-right':
-        return 'opacity-100 translate-x-0';
-      case 'scale-in':
-        return 'opacity-100 scale-100';
-      case 'fade-in':
-        return 'opacity-100';
-      case 'bounce-in':
-        return 'opacity-100 scale-100 translate-y-0';
-      default:
-        return 'opacity-100 translate-y-0';
-    }
-  };
-
-  const transitionClass = animationType === 'bounce-in' 
-    ? 'transition-all duration-700 cubic-bezier(0.68, -0.55, 0.265, 1.55)'
-    : 'transition-all duration-700 ease-out';
+  const ref = useRef()
+  const isInView = useInView(ref, { once, margin: '-50px 0px' })
 
   return (
-    <div
+    <motion.div
       ref={ref}
-      className={cn(
-        transitionClass,
-        !isVisible ? getAnimationClass() : getVisibleClass(),
-        className
-      )}
-      style={{ 
-        transitionDelay: isVisible ? `${delay}ms` : '0ms' 
+      className={cn(className)}
+      variants={variants[animationType] || variants['fade-up']}
+      initial="hidden"
+      animate={isInView ? 'visible' : 'hidden'}
+      transition={{
+        duration: 0.7,
+        delay: delay / 1000,
+        ease: [0.25, 0.1, 0.25, 1],
       }}
-      {...props}
     >
       {children}
-    </div>
-  );
-};
+    </motion.div>
+  )
+}
+
+export const StaggerContainer = ({
+  children,
+  className,
+  staggerDelay = 0.08,
+}) => {
+  const ref = useRef()
+  const isInView = useInView(ref, { once: true, margin: '-50px 0px' })
+
+  return (
+    <motion.div
+      ref={ref}
+      className={className}
+      initial="hidden"
+      animate={isInView ? 'visible' : 'hidden'}
+      variants={{
+        visible: {
+          transition: {
+            staggerChildren: staggerDelay,
+          },
+        },
+      }}
+    >
+      {children}
+    </motion.div>
+  )
+}
+
+export const StaggerItem = ({ children, className }) => {
+  return (
+    <motion.div
+      className={className}
+      variants={{
+        hidden: { opacity: 0, y: 25 },
+        visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.25, 0.1, 0.25, 1] } },
+      }}
+    >
+      {children}
+    </motion.div>
+  )
+}

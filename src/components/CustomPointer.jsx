@@ -1,200 +1,182 @@
-import { useEffect, useState } from "react";
-import { cn } from "@/lib/utils";
+import { useEffect, useRef, useState, useCallback } from 'react'
+
+const TRAIL_LENGTH = 6
 
 export const CustomPointer = () => {
-  const [position, setPosition] = useState({ x: 0, y: 0 });
-  const [isVisible, setIsVisible] = useState(false);
-  const [isClicking, setIsClicking] = useState(false);
-  const [isTouchDevice, setIsTouchDevice] = useState(false);
-  const [isHovering, setIsHovering] = useState(false);
+  const [pos, setPos] = useState({ x: 0, y: 0 })
+  const [hovering, setHovering] = useState(false)
+  const [visible, setVisible] = useState(false)
+  const [clicking, setClicking] = useState(false)
+  const [shockwaves, setShockwaves] = useState([])
+  const trailRef = useRef([])
+  const dotRefs = useRef([])
+  const posRef = useRef({ x: 0, y: 0 })
+  const frameId = useRef(null)
+  const shockId = useRef(null)
+
+  const updateDots = useCallback(() => {
+    const trail = trailRef.current
+    const len = trail.length
+    for (let i = 0; i < len; i++) {
+      const dot = dotRefs.current[i]
+      if (!dot) continue
+      const t = trail[i]
+      const scale = 1 - i / TRAIL_LENGTH
+      dot.style.left = `${t.x}px`
+      dot.style.top = `${t.y}px`
+      dot.style.width = `${4 * scale}px`
+      dot.style.height = `${4 * scale}px`
+      dot.style.background = `rgba(0, 212, 255, ${0.3 * scale})`
+      dot.style.boxShadow = `0 0 ${6 * scale}px rgba(0,212,255,${0.2 * scale})`
+    }
+  }, [])
 
   useEffect(() => {
-    // Always enable custom pointer on desktop - ignore touch detection for now
-    const isDesktop = window.innerWidth >= 768; // Consider desktop if screen width >= 768px
-    
-    setIsTouchDevice(!isDesktop); // Force desktop mode for wider screens
-    
-    // Force show pointer immediately
-    setIsVisible(true);
+    const isTouch = 'ontouchstart' in window || window.innerWidth < 768
+    if (isTouch) return
 
-    // Hide default cursor immediately
-    document.body.style.cursor = 'none';
-    document.documentElement.style.cursor = 'none';
-    // Apply to all elements
-    const style = document.createElement('style');
-    style.id = 'custom-cursor-hide';
-    style.innerHTML = `
-      *, *::before, *::after {
-        cursor: none !important;
+    setVisible(true)
+
+    const style = document.createElement('style')
+    style.id = 'cyber-cursor-hide'
+    style.innerHTML = '*, *::before, *::after { cursor: none !important; }'
+    document.head.appendChild(style)
+
+    const handleMove = (e) => {
+      const x = e.clientX
+      const y = e.clientY
+      posRef.current = { x, y }
+      setPos({ x, y })
+      trailRef.current = [...trailRef.current.slice(-TRAIL_LENGTH + 1), { x, y }]
+      if (!frameId.current) {
+        frameId.current = requestAnimationFrame(() => {
+          updateDots()
+          frameId.current = null
+        })
       }
-    `;
-    document.head.appendChild(style);
+    }
 
-    const handleMouseMove = (e) => {
-      setPosition({ x: e.clientX, y: e.clientY });
-      setIsVisible(true);
-    };
+    const handleDown = () => {
+      setClicking(true)
+      setShockwaves((prev) => [...prev, { x: posRef.current.x, y: posRef.current.y, id: Date.now(), time: Date.now() }])
+    }
+    const handleUp = () => setClicking(false)
 
-    const handleMouseDown = () => {
-      if (!isTouchDevice) {
-        setIsClicking(true);
-      }
-    };
+    const handleOver = (e) => {
+      const t = e.target
+      const isClickable =
+        t.tagName === 'A' ||
+        t.tagName === 'BUTTON' ||
+        t.closest('a') ||
+        t.closest('button') ||
+        t.dataset.cursorHover ||
+        t.closest('[data-cursor-hover]')
+      setHovering(!!isClickable)
+    }
 
-    const handleMouseUp = () => {
-      if (!isTouchDevice) {
-        setIsClicking(false);
-      }
-    };
+    document.addEventListener('mousemove', handleMove, { passive: true })
+    document.addEventListener('mousedown', handleDown)
+    document.addEventListener('mouseup', handleUp)
+    document.addEventListener('mouseover', handleOver, true)
 
-    const handleMouseEnter = () => {
-      if (!isTouchDevice) {
-        setIsVisible(true);
-      }
-    };
-
-    const handleMouseLeave = () => {
-      if (!isTouchDevice) {
-        setIsVisible(false);
-      }
-    };
-
-    const handleMouseOver = (e) => {
-      if (!isTouchDevice) {
-        const target = e.target;
-        const isClickable = target.tagName === 'A' || 
-                          target.tagName === 'BUTTON' || 
-                          target.onclick !== null ||
-                          target.style.cursor === 'pointer' ||
-                          target.classList.contains('cursor-pointer');
-        setIsHovering(isClickable);
-      }
-    };
-
-    const handleTouchStart = (e) => {
-      if (isTouchDevice) {
-        const touch = e.touches[0];
-        setPosition({ x: touch.clientX, y: touch.clientY });
-        setIsVisible(true);
-        setIsClicking(true);
-      }
-    };
-
-    const handleTouchMove = (e) => {
-      if (isTouchDevice) {
-        // Only prevent default if we're actively showing the pointer
-        // Allow normal scrolling when pointer is not active
-        if (isVisible && e.touches.length === 1) {
-          const touch = e.touches[0];
-          setPosition({ x: touch.clientX, y: touch.clientY });
-        }
-        // Don't prevent default to allow normal scrolling
-      }
-    };
-
-    const handleTouchEnd = () => {
-      if (isTouchDevice) {
-        setIsClicking(false);
-        // Keep visible for a short time after touch
-        setTimeout(() => setIsVisible(false), 1000);
-      }
-    };
-
-    // Add event listeners for both mouse and touch to be safe
-    document.addEventListener('mousemove', handleMouseMove);
-    document.addEventListener('mousedown', handleMouseDown);
-    document.addEventListener('mouseup', handleMouseUp);
-    document.addEventListener('mouseenter', handleMouseEnter, true);
-    document.addEventListener('mouseleave', handleMouseLeave, true);
-    document.addEventListener('mouseover', handleMouseOver, true);
-    
-    // Also add touch events for hybrid devices (but allow normal scrolling)
-    document.addEventListener('touchstart', handleTouchStart, { passive: true });
-    document.addEventListener('touchmove', handleTouchMove, { passive: true });
-    document.addEventListener('touchend', handleTouchEnd, { passive: true });
+    shockId.current = setInterval(() => {
+      setShockwaves((prev) => prev.filter((s) => Date.now() - s.time < 600))
+    }, 200)
 
     return () => {
-      document.removeEventListener('mousemove', handleMouseMove);
-      document.removeEventListener('mousedown', handleMouseDown);
-      document.removeEventListener('mouseup', handleMouseUp);
-      document.removeEventListener('mouseenter', handleMouseEnter, true);
-      document.removeEventListener('mouseleave', handleMouseLeave, true);
-      document.removeEventListener('mouseover', handleMouseOver, true);
-      document.removeEventListener('touchstart', handleTouchStart);
-      document.removeEventListener('touchmove', handleTouchMove);
-      document.removeEventListener('touchend', handleTouchEnd);
-      
-      // Restore default cursor
-      document.body.style.cursor = 'auto';
-      document.documentElement.style.cursor = 'auto';
-      // Remove the style element that hides cursors
-      const styleElement = document.getElementById('custom-cursor-hide');
-      if (styleElement) {
-        styleElement.remove();
-      }
-    };
-  }, [isTouchDevice]);
+      document.removeEventListener('mousemove', handleMove)
+      document.removeEventListener('mousedown', handleDown)
+      document.removeEventListener('mouseup', handleUp)
+      document.removeEventListener('mouseover', handleOver, true)
+      if (frameId.current) cancelAnimationFrame(frameId.current)
+      if (shockId.current) clearInterval(shockId.current)
+      const el = document.getElementById('cyber-cursor-hide')
+      if (el) el.remove()
+    }
+  }, [updateDots])
 
-  // Show for desktop (non-touch) or when explicitly visible on touch
-  if (!isTouchDevice || isVisible) {
-    return (
+  if (!visible) return null
+
+  return (
+    <>
+      {Array.from({ length: TRAIL_LENGTH }).map((_, i) => (
+        <div
+          key={i}
+          ref={(el) => { dotRefs.current[i] = el }}
+          className="fixed pointer-events-none z-[9997] rounded-full"
+          style={{
+            left: 0,
+            top: 0,
+            transform: 'translate(-50%, -50%)',
+            willChange: 'left, top, width, height',
+          }}
+        />
+      ))}
+
+      {shockwaves.map((s) => (
+        <div
+          key={s.id}
+          className="fixed pointer-events-none z-[9997] rounded-full"
+          style={{
+            left: s.x,
+            top: s.y,
+            width: 10,
+            height: 10,
+            border: '1px solid rgba(0,212,255,0.6)',
+            transform: 'translate(-50%, -50%)',
+            animation: 'shockwave 0.6s ease-out forwards',
+          }}
+        />
+      ))}
+
       <div
-        className={cn(
-          "fixed pointer-events-none z-[9999] transition-transform duration-150 ease-out",
-          isClicking ? "scale-75" : "scale-100"
-        )}
+        className="fixed pointer-events-none z-[9998]"
         style={{
-          left: position.x,
-          top: position.y,
-          transform: `translate(-50%, -50%) scale(${isClicking ? 0.75 : isHovering ? 1.3 : 1})`,
+          left: pos.x,
+          top: pos.y,
+          transform: `translate(-50%, -50%) scale(${clicking ? 0.75 : hovering ? 1.3 : 1})`,
+          transition: 'transform 0.12s ease-out',
           willChange: 'transform',
         }}
       >
-      {/* Outer ring */}
-      <div
-        className={cn(
-          "w-6 h-6 rounded-full border-2 transition-all duration-200",
-          isHovering 
-            ? "dark:border-yellow-400 border-yellow-500 shadow-lg" 
-            : "dark:border-primary/80 border-primary/60",
-          isClicking ? "animate-pulse" : ""
-        )}
-      >
-        {/* Inner dot */}
+        <svg width="32" height="32" viewBox="0 0 32 32" className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+          <polygon
+            points="16,2 22,6 22,14 26,18 26,26 22,30 16,30 10,26 10,18 6,14 6,6"
+            fill="none"
+            stroke={hovering ? '#ffd700' : '#00d4ff'}
+            strokeWidth="1.2"
+            opacity={hovering ? 0.9 : 0.5}
+          >
+            <animateTransform
+              attributeName="transform"
+              type="rotate"
+              from="0 16 16"
+              to="360 16 16"
+              dur={hovering ? '2s' : '4s'}
+              repeatCount="indefinite"
+            />
+          </polygon>
+          <circle cx="16" cy="16" r="2" fill={hovering ? '#ffd700' : '#00d4ff'} opacity={0.8} />
+        </svg>
+
         <div
-          className={cn(
-            "w-2 h-2 rounded-full absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 transition-all duration-200",
-            isHovering 
-              ? "dark:bg-yellow-400 bg-yellow-500" 
-              : "dark:bg-primary bg-primary/80",
-            isClicking ? "scale-150" : "scale-100"
-          )}
-        />
-      </div>
-      
-      {/* Glow effect */}
-      <div
-        className={cn(
-          "absolute inset-0 rounded-full transition-all duration-200",
-          isHovering
-            ? "dark:shadow-[0_0_25px_theme(colors.yellow.400/0.6)] shadow-[0_0_20px_theme(colors.yellow.500/0.4)]"
-            : "dark:shadow-[0_0_20px_hsl(var(--primary)/0.5)] shadow-[0_0_15px_hsl(var(--primary)/0.3)]",
-          isClicking ? "opacity-100" : "opacity-60"
-        )}
-      />
-      
-      {/* Touch ripple for mobile */}
-      {isTouchDevice && isClicking && (
-        <div
-          className="absolute inset-0 rounded-full border border-primary/30 animate-ping"
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full"
           style={{
-            animation: "ping 0.6s cubic-bezier(0, 0, 0.2, 1)"
+            width: 40,
+            height: 40,
+            background: hovering
+              ? 'radial-gradient(circle, rgba(255,215,0,0.15), transparent)'
+              : 'radial-gradient(circle, rgba(0,212,255,0.15), transparent)',
           }}
         />
-      )}
-    </div>
-  );
-  }
-  
-  return null;
-};
+      </div>
+
+      <style>{`
+        @keyframes shockwave {
+          0% { width: 10px; height: 10px; opacity: 1; }
+          100% { width: 80px; height: 80px; opacity: 0; }
+        }
+      `}</style>
+    </>
+  )
+}

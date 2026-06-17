@@ -1,124 +1,187 @@
-import { Briefcase, Code, User } from "lucide-react";
-import { AnimatedSection } from "./AnimatedSection";
-import { useStaggeredAnimation } from "@/hooks/useScrollAnimation";
-import { cn } from "@/lib/utils";
+import {
+  AnimatedSection,
+  StaggerContainer,
+  StaggerItem,
+} from "./AnimatedSection";
+
+const features = [
+  {
+    icon: "fullstack",
+    title: "Full-Stack Developer",
+    desc: "Building responsive, performant applications with React, Go, and modern frameworks.",
+  },
+  {
+    icon: "game",
+    title: "Anime and Gaming Enthusiast",
+    desc: "Exploring new animes to binge watch, absolute-cinema games that leave you questioning life.",
+  },
+  {
+    icon: "uiux",
+    title: "UI/UX Architect",
+    desc: "Crafting intuitive interfaces with focus on user experience and accessibility.",
+  },
+  {
+    icon: "problemsolver",
+    title: "Problem Solver",
+    desc: "500+ computer problems solved across platforms. Algorithms & data structures masochist.",
+  },
+];
 
 export const AboutSection = () => {
-  const features = [
-    {
-      icon: Code,
-      title: "Tech Enthusiast",
-      description: "Creating responsive applications with modern frameworks."
-    },
-    {
-      icon: User,
-      title: "UI/UX Design",
-      description: "Designing intuitive user interfaces and seamless user experiences."
-    },
-    {
-      icon: Briefcase,
-      title: "Project Management",
-      description: "Leading projects from conception to completion with out-of-the-box methodologies."
-    }
-  ];
-
-  const [cardsRef, visibleCards] = useStaggeredAnimation(features.length, {
-    staggerDelay: 150,
-    threshold: 0.2
-  });
-
   return (
-    <section id="about" className="py-24 px-4 relative overflow-hidden">
-      {/* Background decorative elements */}
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="floating-element absolute top-10 left-5 w-12 h-12 bg-primary/10 rounded-full" style={{ "--delay": "0s" }}></div>
-        <div className="floating-element absolute bottom-20 right-5 w-8 h-8 bg-purple-500/10 rounded-full" style={{ "--delay": "2s" }}></div>
-        <div className="morphing-bg opacity-5"></div>
-      </div>
-
-      <div className="container mx-auto max-w-5xl">
-        <AnimatedSection animationType="slide-up">
-          <h2 className="text-3xl md:text-4xl font-bold mb-12 text-center">
-            About <span className="text-gradient"> Me</span>
+    <section
+      id="about"
+      className="cyber-section"
+      style={{ background: "var(--bg-card)" }}
+    >
+      <div className="cyber-grid-bg" />
+      <div className="cyber-container">
+        <AnimatedSection animationType="fade-up">
+          <div className="section-eyebrow">About</div>
+          <h2 className="section-title">
+            System <em>Overview</em>
           </h2>
+          <p className="section-sub">Aritra Saha — cybernetic profile</p>
         </AnimatedSection>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-          <AnimatedSection animationType="slide-right" delay={300}>
-            <div className="space-y-6">
-              <h3 className="text-2xl font-semibold">
-                Passionate Web Developer & <span className="text-gradient">Tech Creator</span>
-              </h3>
-
-              <p className="text-muted-foreground leading-relaxed">
-                Starting out in web development, I specialize
-                in grasping the problem and creating responsive,
-                accessible, and performant web
-                applications using modern technologies.
-              </p>
-
-              <p className="text-muted-foreground leading-relaxed">
-                I'm not only passionate about creating elegant solutions to complex
-                problems, and I'm constantly learning new technologies and
-                techniques to stay at the forefront of the ever-evolving technological landscape
-                in the contemporary world.
-              </p>
-
-              <div className="flex flex-col sm:flex-row gap-4 pt-4">
-                <a href="#contact" className="cosmic-button glow-on-hover group relative overflow-hidden transform transition-all duration-300 hover:scale-105 hover:-translate-y-1">
-                  <span className="relative z-10">
-                    Get In Touch
-                    <span className="inline-block transition-transform group-hover:translate-x-1 ml-2">→</span>
-                  </span>
-                  <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-purple-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                </a>
-
-                <a
-                  href="https://drive.google.com/file/d/1qyJpY2pWAwlCNdXjAa-HC__Z-Js2G4G3/view?usp=sharing"
-                  target="_blank"
-                  className="px-6 py-2 rounded-full border border-primary text-primary hover:bg-primary/10 transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-primary/20 glow-on-hover group relative overflow-hidden"
-                >
-                  <span className="relative z-10">Download CV</span>
-                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                </a>
+        <div
+          className="about-grid"
+          style={{
+            display: "grid",
+            gridTemplateColumns: "1fr 1fr",
+            gap: "3rem",
+            alignItems: "start",
+          }}
+        >
+          <AnimatedSection animationType="fade-right">
+            <div className="cyber-term" style={{ marginBottom: "2rem" }}>
+              <div className="cyber-term-bar">
+                <span className="cyber-term-dot r" />
+                <span className="cyber-term-dot y" />
+                <span className="cyber-term-dot g" />
+                <span className="cyber-term-fname">aritra@dev ~ about.txt</span>
               </div>
+              <div className="cyber-term-body" style={{ textAlign: "left" }}>
+                <div>
+                  <span className="tc">// Aritra Saha — Bio</span>
+                </div>
+                <div>
+                  <span className="tk">"name"</span>:{" "}
+                  <span className="ts">"Aritra Saha"</span>,
+                </div>
+                <div>
+                  <span className="tk">"role"</span>:{" "}
+                  <span className="ts">
+                    "Full-Stack Developer / Anime Nerd & Gamer"
+                  </span>
+                  ,
+                </div>
+                <div>
+                  <span className="tk">"location"</span>:{" "}
+                  <span className="ts">"Kolkata, India"</span>,
+                </div>
+                <div>
+                  <span className="tk">"status"</span>:{" "}
+                  <span className="tb">"actively_building"</span>
+                  <span className="cyber-cur" />
+                </div>
+              </div>
+            </div>
+
+            <p
+              style={{
+                fontFamily: "'Rajdhani', sans-serif",
+                fontSize: "0.9rem",
+                color: "#8888aa",
+                lineHeight: 1.7,
+                textAlign: "left",
+              }}
+            >
+              Starting out in web development, I specialize in grasping the
+              problem and creating responsive, accessible, and performant
+              applications using modern technologies. I'm passionate about
+              elegant solutions and constantly learning new technologies.
+            </p>
+
+            <div style={{ display: "flex", gap: "1rem", marginTop: "1.5rem" }}>
+              <a href="#contact" className="cyber-button">
+                CONNECT
+              </a>
+              <a
+                href="/resume.pdf"
+                download
+                className="cyber-button cyber-button-gold"
+              >
+                <svg
+                  width="14"
+                  height="14"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                >
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3" />
+                </svg>
+                RESUME
+              </a>
             </div>
           </AnimatedSection>
 
-          <div ref={cardsRef} className="grid grid-cols-1 gap-6">
-            {features.map((feature, index) => {
-              const IconComponent = feature.icon;
-              return (
+          <StaggerContainer className="cyber-features" staggerDelay={0.1}>
+            {features.map((f, i) => (
+              <StaggerItem key={i}>
                 <div
-                  key={index}
-                  className={cn(
-                    "gradient-border p-6 card-3d group relative overflow-hidden",
-                    visibleCards.has(index) ? "stagger-animation" : "opacity-0"
-                  )}
+                  className="cyber-card"
                   style={{
-                    animationDelay: `${600 + index * 150}ms`
+                    padding: "1.2rem",
+                    marginBottom: "0.8rem",
+                    textAlign: "left",
                   }}
                 >
-                  {/* Hover effect background */}
-                  <div className="absolute inset-0 bg-gradient-to-r from-primary/5 to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-
-                  <div className="flex items-start gap-4 relative">
-                    <div className="p-3 rounded-full bg-primary/10 group-hover:bg-primary/20 transition-all duration-300 group-hover:scale-110">
-                      <IconComponent className="h-6 w-6 text-primary group-hover:text-primary/80 transition-colors duration-300" />
-                    </div>
-                    <div className="text-left flex-1">
-                      <h4 className="font-semibold text-lg group-hover:text-primary transition-colors duration-300">
-                        {feature.title}
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "0.8rem",
+                    }}
+                  >
+                    <img
+                      src={`/icons/${f.icon}.gif`}
+                      alt={f.title}
+                      style={{
+                        width: 28,
+                        height: 28,
+                        borderRadius: 4,
+                        objectFit: "contain",
+                      }}
+                    />
+                    <div>
+                      <h4
+                        style={{
+                          fontFamily: "'Orbitron', monospace",
+                          fontSize: "0.85rem",
+                          fontWeight: 600,
+                          color: "#e0e0ff",
+                          marginBottom: 2,
+                        }}
+                      >
+                        {f.title}
                       </h4>
-                      <p className="text-muted-foreground group-hover:text-foreground/80 transition-colors duration-300">
-                        {feature.description}
+                      <p
+                        style={{
+                          fontFamily: "'Rajdhani', sans-serif",
+                          fontSize: "0.8rem",
+                          color: "#8888aa",
+                        }}
+                      >
+                        {f.desc}
                       </p>
                     </div>
                   </div>
                 </div>
-              );
-            })}
-          </div>
+              </StaggerItem>
+            ))}
+          </StaggerContainer>
         </div>
       </div>
     </section>
