@@ -1,241 +1,218 @@
-import { useState, useRef, useEffect, useMemo, useCallback } from 'react'
-import { motion, useInView } from 'framer-motion'
+import { useState, useRef, useEffect, useMemo, useCallback } from "react";
+import { motion, useInView, useReducedMotion } from "framer-motion";
+import {
+  siPython,
+  siJavascript,
+  siCplusplus,
+  siOpenjdk,
+  siGo,
+  siMysql,
+  siReact,
+  siHtml5,
+  siTailwindcss,
+  siFlutter,
+  siFramer,
+  siNodedotjs,
+  siFastapi,
+  siMongodb,
+  siFirebase,
+  siGit,
+  siDocker,
+  siLinux,
+  siOpencv,
+  siYolo,
+  siTensorflow,
+} from "simple-icons";
 
 const skillNodes = [
-  { id: 'python', label: 'Python', level: 90, category: 'Languages' },
-  { id: 'javascript', label: 'JS', level: 85, category: 'Languages' },
-  { id: 'cpp', label: 'C++', level: 80, category: 'Languages' },
-  { id: 'java', label: 'Java', level: 80, category: 'Languages' },
-  { id: 'golang', label: 'GoLang', level: 70, category: 'Languages' },
-  { id: 'sql', label: 'SQL', level: 85, category: 'Languages' },
-  { id: 'react', label: 'React', level: 85, category: 'Frontend' },
-  { id: 'htmlcss', label: 'HTML/CSS', level: 90, category: 'Frontend' },
-  { id: 'tailwind', label: 'TailwindCSS', level: 85, category: 'Frontend' },
-  { id: 'flutter', label: 'Flutter', level: 70, category: 'Frontend' },
-  { id: 'threejs', label: 'Three.js', level: 65, category: 'Frontend' },
-  { id: 'framermotion', label: 'Framer', level: 75, category: 'Frontend' },
-  { id: 'nodejs', label: 'Node.js', level: 80, category: 'Backend & Tools' },
-  { id: 'fastapi', label: 'FastAPI', level: 75, category: 'Backend & Tools' },
-  { id: 'mongodb', label: 'MongoDB', level: 85, category: 'Backend & Tools' },
-  { id: 'firebase', label: 'Firebase', level: 80, category: 'Backend & Tools' },
-  { id: 'git', label: 'Git', level: 90, category: 'Backend & Tools' },
-  { id: 'docker', label: 'Docker', level: 70, category: 'Backend & Tools' },
-]
+  { id: "python", label: "Python", level: 90, experience: "5 yrs", icon: siPython, category: "Languages" },
+  { id: "javascript", label: "JavaScript", level: 80, experience: "2 yrs", icon: siJavascript, category: "Languages" },
+  { id: "cpp", label: "C++", level: 50, experience: "6 months", icon: siCplusplus, category: "Languages" },
+  { id: "java", label: "Java", level: 60, experience: "1 yr", icon: siOpenjdk, category: "Languages" },
+  { id: "golang", label: "Go", level: 30, experience: "6 months", icon: siGo, category: "Languages" },
+  { id: "sql", label: "SQL", level: 85, experience: "2 yrs", icon: siMysql, category: "Languages" },
+  { id: "react", label: "React", level: 85, experience: "2 yrs", icon: siReact, category: "Frontend" },
+  { id: "htmlcss", label: "HTML/CSS", level: 90, experience: "3 yrs", icon: siHtml5, category: "Frontend" },
+  { id: "tailwind", label: "Tailwind", level: 75, experience: "2 yrs", icon: siTailwindcss, category: "Frontend" },
+  { id: "flutter", label: "Flutter", level: 45, experience: "6 months", icon: siFlutter, category: "Frontend" },
+  { id: "framermotion", label: "Framer", level: 25, experience: "2 months", icon: siFramer, category: "Frontend" },
+  { id: "nodejs", label: "Node", level: 85, experience: "2 yrs", icon: siNodedotjs, category: "Backend & Tools" },
+  { id: "fastapi", label: "FastAPI", level: 70, experience: "3 months", icon: siFastapi, category: "Backend & Tools" },
+  { id: "mongodb", label: "MongoDB", level: 85, experience: "1 yr", icon: siMongodb, category: "Backend & Tools" },
+  { id: "firebase", label: "Firebase", level: 80, experience: "1 yr", icon: siFirebase, category: "Backend & Tools" },
+  { id: "git", label: "Git", level: 90, experience: "3 yrs", icon: siGit, category: "Backend & Tools" },
+  { id: "docker", label: "Docker", level: 15, experience: "1 month", icon: siDocker, category: "Backend & Tools" },
+  { id: "linux", label: "Linux", level: 90, experience: "1 yr", icon: siLinux, category: "Backend & Tools" },
+  { id: "opencv", label: "OpenCV", level: 75, experience: "3 months", icon: siOpencv, category: "AI & Vision" },
+  { id: "yolo", label: "YOLO", level: 75, experience: "3 months", icon: siYolo, category: "AI & Vision" },
+  { id: "aiml", label: "AI/ML", level: 70, experience: "6 months", icon: siTensorflow, category: "AI & Vision" },
+];
 
 const skillEdges = [
-  { source: 'python', target: 'javascript' },
-  { source: 'python', target: 'cpp' },
-  { source: 'python', target: 'sql' },
-  { source: 'python', target: 'fastapi' },
-  { source: 'javascript', target: 'react' },
-  { source: 'javascript', target: 'nodejs' },
-  { source: 'javascript', target: 'threejs' },
-  { source: 'javascript', target: 'sql' },
-  { source: 'cpp', target: 'java' },
-  { source: 'java', target: 'golang' },
-  { source: 'golang', target: 'docker' },
-  { source: 'react', target: 'tailwind' },
-  { source: 'react', target: 'threejs' },
-  { source: 'react', target: 'framermotion' },
-  { source: 'react', target: 'firebase' },
-  { source: 'htmlcss', target: 'tailwind' },
-  { source: 'flutter', target: 'firebase' },
-  { source: 'nodejs', target: 'mongodb' },
-  { source: 'nodejs', target: 'firebase' },
-  { source: 'fastapi', target: 'mongodb' },
-  { source: 'mongodb', target: 'sql' },
-  { source: 'git', target: 'docker' },
-]
+  { source: "python", target: "javascript" },
+  { source: "python", target: "cpp" },
+  { source: "python", target: "sql" },
+  { source: "python", target: "fastapi" },
+  { source: "python", target: "opencv" },
+  { source: "python", target: "aiml" },
+  { source: "javascript", target: "react" },
+  { source: "javascript", target: "nodejs" },
+  { source: "javascript", target: "sql" },
+  { source: "cpp", target: "java" },
+  { source: "java", target: "golang" },
+  { source: "golang", target: "docker" },
+  { source: "golang", target: "linux" },
+  { source: "react", target: "tailwind" },
+  { source: "react", target: "framermotion" },
+  { source: "react", target: "firebase" },
+  { source: "htmlcss", target: "tailwind" },
+  { source: "flutter", target: "firebase" },
+  { source: "nodejs", target: "mongodb" },
+  { source: "nodejs", target: "firebase" },
+  { source: "nodejs", target: "linux" },
+  { source: "fastapi", target: "mongodb" },
+  { source: "fastapi", target: "opencv" },
+  { source: "mongodb", target: "sql" },
+  { source: "git", target: "docker" },
+  { source: "git", target: "linux" },
+  { source: "opencv", target: "yolo" },
+  { source: "opencv", target: "aiml" },
+  { source: "yolo", target: "aiml" },
+];
+
+const categories = ["Languages", "Frontend", "AI & Vision", "Backend & Tools"];
 
 const catColors = {
-  Languages: '#00d4ff',
-  Frontend: '#ff00e6',
-  'Backend & Tools': '#ffd700',
+  Languages: "var(--link)",
+  Frontend: "var(--accent)",
+  "Backend & Tools": "var(--highlight)",
+  "AI & Vision": "var(--info)",
+};
+const alpha = (color, pct) => `color-mix(in oklch, ${color} ${pct}%, transparent)`;
+
+function computeLayout(nodes, width, height) {
+  const cx = width / 2;
+  const cy = height / 2;
+  const pad = 66;
+  const radius = Math.max(92, Math.min(width, height) / 2 - pad);
+
+  const gapSlots = 1.4;
+  const totalSlots = nodes.length + categories.length * gapSlots;
+  const slotAngle = (Math.PI * 2) / totalSlots;
+
+  let cursor = 0;
+  const positions = {};
+
+  categories.forEach((cat) => {
+    const group = nodes.filter((n) => n.category === cat);
+    group.forEach((node) => {
+      const angle = -Math.PI / 2 + (cursor + 0.5) * slotAngle;
+      positions[node.id] = {
+        x: cx + Math.cos(angle) * radius,
+        y: cy + Math.sin(angle) * radius,
+        angle,
+      };
+      cursor += 1;
+    });
+    cursor += gapSlots;
+  });
+
+  return nodes.map((node) => ({ ...node, ...positions[node.id] }));
 }
 
-function computeLayout(nodes, edges, width, height) {
-  const result = nodes.map(n => ({ ...n }))
-  const pad = 60
-  const w = width - pad * 2
-  const h = height - pad * 2
-  const cx = width / 2
-  const cy = height / 2
+const SkillGlyph = ({ icon, x, y, size }) => (
+  <g
+    transform={`translate(${x - size / 2} ${y - size / 2}) scale(${size / 24})`}
+    style={{ pointerEvents: "none" }}
+  >
+    <path d={icon.path} fill={`#${icon.hex}`} />
+  </g>
+);
 
-  result.forEach((node, i) => {
-    const angle = (2 * Math.PI * i) / result.length
-    const r = Math.min(w, h) * 0.35
-    node.x = cx + Math.cos(angle) * r
-    node.y = cy + Math.sin(angle) * r
-    node.vx = 0
-    node.vy = 0
-  })
-
-  const iterations = 120
-  const repulsion = 8000
-  const attraction = 0.008
-  const gravity = 0.008
-
-  for (let iter = 0; iter < iterations; iter++) {
-    for (let i = 0; i < result.length; i++) {
-      for (let j = i + 1; j < result.length; j++) {
-        const dx = result[i].x - result[j].x
-        const dy = result[i].y - result[j].y
-        const dist = Math.sqrt(dx * dx + dy * dy)
-        if (dist < 1) continue
-        const force = repulsion / (dist * dist)
-        const fx = (dx / dist) * force
-        const fy = (dy / dist) * force
-        result[i].vx += fx
-        result[i].vy += fy
-        result[j].vx -= fx
-        result[j].vy -= fy
-      }
-    }
-
-    for (const edge of edges) {
-      const s = result.find(n => n.id === edge.source)
-      const t = result.find(n => n.id === edge.target)
-      if (!s || !t) continue
-      const dx = t.x - s.x
-      const dy = t.y - s.y
-      const dist = Math.sqrt(dx * dx + dy * dy)
-      if (dist < 1) continue
-      const force = dist * attraction
-      const fx = (dx / dist) * force
-      const fy = (dy / dist) * force
-      s.vx += fx
-      s.vy += fy
-      t.vx -= fx
-      t.vy -= fy
-    }
-
-    for (const node of result) {
-      const dx = cx - node.x
-      const dy = cy - node.y
-      node.vx += dx * gravity
-      node.vy += dy * gravity
-    }
-
-    for (const node of result) {
-      node.vx *= 0.85
-      node.vy *= 0.85
-      node.x += node.vx
-      node.y += node.vy
-      node.x = Math.max(pad, Math.min(width - pad, node.x))
-      node.y = Math.max(pad, Math.min(height - pad, node.y))
-    }
-  }
-
-  result.forEach(n => { delete n.vx; delete n.vy })
-  return result
-}
-
-const SkillDetailPanel = ({ node, connectedNodeIds, allNodes, onClose, catColor }) => {
-  const panelRef = useRef(null)
-  const r = 38
-  const circ = 2 * Math.PI * r
-  const offset = circ - (node.level / 100) * circ
-
-  const connected = connectedNodeIds
-    ? Array.from(connectedNodeIds).map(id => allNodes.find(n => n.id === id)).filter(Boolean)
-    : []
+const SkillDetailPanel = ({ node, connected, onClose, catColor }) => {
+  const panelRef = useRef(null);
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      const handler = (e) => {
-        if (panelRef.current && !panelRef.current.contains(e.target)) onClose()
-      }
-      document.addEventListener('mousedown', handler)
-      return () => document.removeEventListener('mousedown', handler)
-    }, 150)
-    return () => clearTimeout(timer)
-  }, [onClose])
+    const handler = (e) => {
+      if (panelRef.current && !panelRef.current.contains(e.target)) onClose();
+    };
+    const timer = setTimeout(
+      () => document.addEventListener("mousedown", handler),
+      150,
+    );
+    return () => {
+      clearTimeout(timer);
+      document.removeEventListener("mousedown", handler);
+    };
+  }, [onClose]);
+
+  if (!node) return null;
 
   return (
     <motion.div
       ref={panelRef}
-      initial={{ opacity: 0, scale: 0.85, y: 10 }}
-      animate={{ opacity: 1, scale: 1, y: 0 }}
-      exit={{ opacity: 0, scale: 0.85 }}
-      transition={{ type: 'spring', damping: 22, stiffness: 300 }}
-      style={{
-        position: 'absolute',
-        bottom: 16,
-        right: 16,
-        width: 200,
-        background: 'rgba(10,10,22,0.96)',
-        border: `1px solid ${catColor}33`,
-        borderRadius: 10,
-        padding: '1.2rem',
-        backdropFilter: 'blur(24px)',
-        WebkitBackdropFilter: 'blur(24px)',
-        zIndex: 20,
-        boxShadow: `0 20px 60px rgba(0,0,0,0.6), 0 0 20px ${catColor}15, inset 0 1px 0 ${catColor}11`,
-      }}
+      initial={{ opacity: 0, y: 8 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: 8 }}
+      transition={{ duration: 0.25, ease: [0.25, 0.1, 0.25, 1] }}
+      className="skill-panel"
+      style={{ borderColor: alpha(catColor, 30) }}
     >
       <button
+        type="button"
+        className="skill-panel__close"
         onClick={onClose}
-        style={{
-          position: 'absolute', top: 6, right: 8,
-          background: 'none', border: 'none', color: '#8888aa',
-          fontSize: '1rem', cursor: 'pointer', fontFamily: "'Share Tech Mono'",
-          lineHeight: 1, padding: 2,
-        }}
+        aria-label="Close"
       >
         ×
       </button>
 
-      <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '0.6rem' }}>
-        <svg width="76" height="76" viewBox="0 0 100 100">
-          <circle cx="50" cy="50" r={r} fill="none" stroke="rgba(255,255,255,0.04)" strokeWidth="5" />
-          <circle
-            cx="50" cy="50" r={r}
-            fill="none" stroke={catColor} strokeWidth="5"
-            strokeDasharray={circ}
-            strokeDashoffset={offset}
-            strokeLinecap="round"
-            transform="rotate(-90 50 50)"
-            style={{ filter: `drop-shadow(0 0 4px ${catColor})` }}
-          />
-          <text x="50" y="44" textAnchor="middle" fill="#e0e0ff" fontSize="20" fontWeight="700" fontFamily="'Orbitron',monospace">
-            {node.level}%
-          </text>
-          <text x="50" y="62" textAnchor="middle" fill="#8888aa" fontSize="7" fontWeight="600" fontFamily="'Share Tech Mono',monospace" letterSpacing="1">
-            PROFICIENCY
-          </text>
-        </svg>
+      <div className="skill-panel__head">
+        <span
+          className="skill-panel__icon"
+          style={{ background: `#${node.icon.hex}` }}
+        >
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d={node.icon.path} fill="var(--paper-0)" />
+          </svg>
+        </span>
+        <div>
+          <div className="skill-panel__name">{node.label}</div>
+          <div className="skill-panel__cat" style={{ color: catColor }}>
+            {node.category}
+          </div>
+        </div>
       </div>
 
-      <div style={{ textAlign: 'center', marginBottom: '0.7rem' }}>
-        <h3 style={{ fontFamily: "'Orbitron',monospace", fontSize: '0.8rem', fontWeight: 600, color: '#e0e0ff', marginBottom: 2 }}>
-          {node.label}
-        </h3>
-        <span style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: '0.55rem', fontWeight: 600, color: catColor, letterSpacing: '0.1em' }}>
-          [{node.category.toUpperCase()}]
+      <div className="skill-panel__facts">
+        <span>
+          <em>Experience</em>
+          {node.experience}
         </span>
+        <span>
+          <em>Proficiency</em>
+          {node.level}%
+        </span>
+      </div>
+
+      <div className="skill-panel__meter" aria-hidden="true">
+        <span style={{ width: `${node.level}%`, background: catColor }} />
       </div>
 
       {connected.length > 0 && (
         <>
-          <div style={{
-            height: 1,
-            background: `linear-gradient(90deg, transparent, ${catColor}22, transparent)`,
-            marginBottom: '0.6rem',
-          }} />
-          <div style={{ fontFamily: "'Share Tech Mono',monospace", fontSize: '0.5rem', fontWeight: 600, color: '#8888aa', letterSpacing: '0.1em', marginBottom: 6 }}>
-            LINKED SKILLS
-          </div>
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 4 }}>
-            {connected.map(s => (
-              <span key={s.id} style={{
-                fontFamily: "'Rajdhani',sans-serif",
-                fontSize: '0.7rem',
-                color: catColors[s.category],
-                padding: '2px 7px',
-                background: `${catColors[s.category]}11`,
-                border: `1px solid ${catColors[s.category]}22`,
-                borderRadius: 3,
-              }}>
+          <div className="skill-panel__divider" />
+          <div className="skill-panel__label">Linked</div>
+          <div className="skill-panel__tags">
+            {connected.map((s) => (
+              <span
+                key={s.id}
+                className="skill-panel__tag"
+                style={{
+                  color: catColors[s.category],
+                  borderColor: alpha(catColors[s.category], 30),
+                }}
+              >
                 {s.label}
               </span>
             ))}
@@ -243,231 +220,239 @@ const SkillDetailPanel = ({ node, connectedNodeIds, allNodes, onClose, catColor 
         </>
       )}
     </motion.div>
-  )
-}
+  );
+};
 
 export const SkillsGraph = () => {
-  const containerRef = useRef(null)
-  const animRef = useRef(null)
-  const [dims, setDims] = useState({ w: 500, h: 420 })
-  const [hoveredNode, setHoveredNode] = useState(null)
-  const [clickedNode, setClickedNode] = useState(null)
-  const isInView = useInView(animRef, { once: true, margin: '-80px 0px' })
+  const containerRef = useRef(null);
+  const animRef = useRef(null);
+  const [dims, setDims] = useState({ w: 520, h: 460 });
+  const [hoveredNode, setHoveredNode] = useState(null);
+  const [clickedNode, setClickedNode] = useState(null);
+  const isInView = useInView(animRef, { once: true, margin: "-80px 0px" });
+  const reduceMotion = useReducedMotion();
 
   useEffect(() => {
     const obs = new ResizeObserver(([entry]) => {
-      const { width } = entry.contentRect
-      setDims({ w: Math.max(width, 300), h: Math.max(width * 0.75, 350) })
-    })
-    if (containerRef.current) obs.observe(containerRef.current)
-    return () => obs.disconnect()
-  }, [])
+      const { width } = entry.contentRect;
+      const w = Math.max(width, 300);
+      setDims({ w, h: Math.min(Math.max(w * 0.86, 360), 560) });
+    });
+    if (containerRef.current) obs.observe(containerRef.current);
+    return () => obs.disconnect();
+  }, []);
 
-  const laidOutNodes = useMemo(() => computeLayout(skillNodes, skillEdges, dims.w, dims.h), [dims.w, dims.h])
+  const laidOutNodes = useMemo(
+    () => computeLayout(skillNodes, dims.w, dims.h),
+    [dims.w, dims.h],
+  );
 
   const adjacency = useMemo(() => {
-    const map = {}
-    skillEdges.forEach(e => {
-      if (!map[e.source]) map[e.source] = new Set()
-      if (!map[e.target]) map[e.target] = new Set()
-      map[e.source].add(e.target)
-      map[e.target].add(e.source)
-    })
-    return map
-  }, [])
+    const map = {};
+    skillEdges.forEach((e) => {
+      if (!map[e.source]) map[e.source] = new Set();
+      if (!map[e.target]) map[e.target] = new Set();
+      map[e.source].add(e.target);
+      map[e.target].add(e.source);
+    });
+    return map;
+  }, []);
 
   const highlighted = useMemo(() => {
-    if (!hoveredNode) return { nodes: new Set(), edges: new Set() }
-    const nodes = new Set([hoveredNode])
-    const connected = adjacency[hoveredNode]
-    if (connected) connected.forEach(n => nodes.add(n))
-    const edgeIds = new Set()
+    if (!hoveredNode) return { nodes: new Set(), edges: new Set() };
+    const nodes = new Set([hoveredNode]);
+    (adjacency[hoveredNode] || new Set()).forEach((n) => nodes.add(n));
+    const edgeIds = new Set();
     skillEdges.forEach((e, i) => {
-      if (nodes.has(e.source) && nodes.has(e.target)) edgeIds.add(i)
-    })
-    return { nodes, edges: edgeIds }
-  }, [hoveredNode, adjacency])
+      if (nodes.has(e.source) && nodes.has(e.target)) edgeIds.add(i);
+    });
+    return { nodes, edges: edgeIds };
+  }, [hoveredNode, adjacency]);
 
   const handleNodeClick = useCallback((id) => {
-    setClickedNode(prev => (prev === id ? null : id))
-  }, [])
+    setClickedNode((prev) => (prev === id ? null : id));
+  }, []);
 
-  const catArr = Object.entries(catColors)
+  const clicked = clickedNode
+    ? laidOutNodes.find((n) => n.id === clickedNode)
+    : null;
+
+  const activeId = hoveredNode || clickedNode;
 
   return (
-    <div ref={containerRef} style={{ width: '100%', height: '100%', minHeight: 380, position: 'relative' }}>
-      <div style={{
-        position: 'absolute', top: 0, left: 0, zIndex: 5,
-        display: 'flex', gap: 10, flexWrap: 'wrap',
-      }}>
-        {catArr.map(([cat, color]) => (
-          <div key={cat} style={{
-            display: 'flex', alignItems: 'center', gap: 5,
-            fontFamily: "'Share Tech Mono',monospace",
-            fontSize: '0.55rem', fontWeight: 600,
-            color: '#8888aa', letterSpacing: '0.08em',
-          }}>
-            <span style={{
-              width: 8, height: 8, borderRadius: '50%',
-              background: color, boxShadow: `0 0 6px ${color}`,
-            }} />
-            {cat.toUpperCase()}
-          </div>
+    <div ref={containerRef} className="skill-graph" style={{ minHeight: 360 }}>
+      <div className="skill-legend" aria-hidden="true">
+        {categories.map((cat) => (
+          <span key={cat}>
+            <i style={{ background: catColors[cat] }} />
+            {cat}
+          </span>
         ))}
       </div>
 
-      <div style={{
-        position: 'absolute', top: 0, right: 0, zIndex: 5,
-        fontFamily: "'Share Tech Mono',monospace",
-        fontSize: '0.55rem', color: '#8888aa',
-        letterSpacing: '0.05em', textAlign: 'right',
-        lineHeight: 1.6,
-      }}>
-        <div>hover → highlight path</div>
-        <div>click → view level</div>
-      </div>
-
-      <motion.div
+      <motion.svg
         ref={animRef}
+        viewBox={`0 0 ${dims.w} ${dims.h}`}
+        className="skill-graph__svg"
+        role="img"
+        aria-label={`Skill graph: ${skillNodes.length} skills across ${categories.length} categories`}
         initial="hidden"
-        animate={isInView ? 'visible' : 'hidden'}
-        style={{ width: '100%', height: '100%', paddingTop: 20 }}
+        animate={isInView ? "visible" : "hidden"}
       >
-        <svg viewBox={`0 0 ${dims.w} ${dims.h}`} style={{ width: '100%', height: dims.h }}>
-          {skillEdges.map((edge, i) => {
-            const source = laidOutNodes.find(n => n.id === edge.source)
-            const target = laidOutNodes.find(n => n.id === edge.target)
-            if (!source || !target) return null
-            const isHi = highlighted.edges.has(i)
-            const mx = (source.x + target.x) / 2
-            const my = (source.y + target.y) / 2 - 25
-            const eColor = catColors[laidOutNodes.find(n => n.id === edge.source)?.category] || '#00d4ff'
-            return (
-              <motion.path
-                key={`edge-${i}`}
-                d={`M${source.x} ${source.y} Q${mx} ${my} ${target.x} ${target.y}`}
-                fill="none"
-                stroke={isHi ? eColor : `rgba(0,212,255,0.08)`}
-                strokeWidth={isHi ? 2.5 : 1}
-                strokeLinecap="round"
-                opacity={hoveredNode && !isHi ? 0.03 : isHi ? 0.85 : 0.15}
+        <circle
+          cx={dims.w / 2}
+          cy={dims.h / 2}
+          r={Math.max(60, Math.min(dims.w, dims.h) / 2 - 66)}
+          className="skill-graph__ring"
+        />
+
+        {skillEdges.map((edge, i) => {
+          const s = laidOutNodes.find((n) => n.id === edge.source);
+          const t = laidOutNodes.find((n) => n.id === edge.target);
+          if (!s || !t) return null;
+          const isHi = highlighted.edges.has(i);
+          const dim = activeId && !isHi;
+          const color = catColors[s.category] || "var(--link)";
+          return (
+            <g key={`edge-${i}`}>
+              <line
+                x1={s.x}
+                y1={s.y}
+                x2={t.x}
+                y2={t.y}
+                stroke={isHi ? color : "var(--rule)"}
+                strokeWidth={isHi ? 1.6 : 1}
+                opacity={dim ? 0 : isHi ? 0.7 : 0.12}
                 style={{
-                  transition: 'all 0.4s cubic-bezier(.4,0,.2,1)',
-                  filter: isHi ? `drop-shadow(0 0 6px ${eColor})` : 'none',
+                  transition: "opacity 0.3s ease, stroke 0.3s ease",
+                  filter: isHi ? `drop-shadow(0 0 5px ${color})` : "none",
                 }}
-                initial={{ pathLength: 0 }}
-                animate={isInView
-                  ? { pathLength: 1, transition: { duration: 0.7, delay: i * 0.035, ease: 'easeOut' } }
-                  : { pathLength: 0 }}
               />
-            )
-          })}
+              {isHi && !reduceMotion && (
+                <>
+                  <circle r="3.2" fill={color} style={{ filter: `drop-shadow(0 0 4px ${color})` }}>
+                    <animateMotion
+                      dur="1.15s"
+                      repeatCount="indefinite"
+                      path={`M ${s.x} ${s.y} L ${t.x} ${t.y}`}
+                    />
+                  </circle>
+                  <circle r="2.2" fill={color} opacity="0.7">
+                    <animateMotion
+                      dur="1.15s"
+                      begin="0.55s"
+                      repeatCount="indefinite"
+                      path={`M ${s.x} ${s.y} L ${t.x} ${t.y}`}
+                    />
+                  </circle>
+                </>
+              )}
+            </g>
+          );
+        })}
 
-          {laidOutNodes.map((node, i) => {
-            const isHi = highlighted.nodes.has(node.id)
-            const color = catColors[node.category]
-            const radius = 14 + (node.level / 100) * 18
-            const circ = 2 * Math.PI * (radius + 3)
-            const arcLen = circ * 0.75 * (node.level / 100)
-
-            return (
-              <motion.g
-                key={node.id}
-                style={{ cursor: 'pointer' }}
-                initial={{ opacity: 0, y: 15 }}
-                animate={isInView
+        {laidOutNodes.map((node, i) => {
+          const isHi = highlighted.nodes.has(node.id);
+          const isDim = activeId && !isHi;
+          const color = catColors[node.category];
+          const radius = 15 + (node.level / 100) * 9;
+          const outward = node.angle;
+          const lx = node.x + Math.cos(outward) * (radius + 11);
+          const ly = node.y + Math.sin(outward) * (radius + 11);
+          const anchor =
+            Math.cos(outward) > 0.35
+              ? "start"
+              : Math.cos(outward) < -0.35
+                ? "end"
+                : "middle";
+          return (
+            <motion.g
+              key={node.id}
+              className="skill-node"
+              style={{ cursor: "pointer" }}
+              initial={{ opacity: 0, scale: 0.6 }}
+              animate={
+                isInView
                   ? {
-                      opacity: 1, y: 0,
-                      transition: { duration: 0.5, delay: i * 0.035, ease: [0.35, 0.1, 0.25, 1] },
+                      opacity: isDim ? 0.3 : 1,
+                      scale: 1,
+                      transition: {
+                        duration: 0.4,
+                        delay: i * 0.02,
+                        ease: [0.25, 0.1, 0.25, 1],
+                      },
                     }
-                  : { opacity: 0, y: 15 }}
-                onMouseEnter={() => setHoveredNode(node.id)}
-                onMouseLeave={() => setHoveredNode(null)}
-                onClick={() => handleNodeClick(node.id)}
-                className={`skill-node ${isHi ? 'skill-node-hi' : ''} ${hoveredNode && !isHi ? 'skill-node-dim' : ''}`}
+                  : { opacity: 0, scale: 0.6 }
+              }
+              whileHover={{ scale: 1.08 }}
+              onMouseEnter={() => setHoveredNode(node.id)}
+              onMouseLeave={() => setHoveredNode(null)}
+              onClick={() => handleNodeClick(node.id)}
+            >
+              <circle
+                cx={node.x}
+                cy={node.y}
+                r={radius}
+                fill={isHi ? alpha(color, 16) : "var(--paper-1)"}
+                stroke={isHi ? color : alpha(color, 45)}
+                strokeWidth={isHi ? 2 : 1.2}
+                style={{ transition: "all 0.25s ease" }}
+              />
+              <circle
+                cx={node.x}
+                cy={node.y}
+                r={radius - 3}
+                fill="none"
+                stroke={color}
+                strokeWidth={1.6}
+                strokeDasharray={`${(node.level / 100) * 2 * Math.PI * (radius - 3)} 999`}
+                strokeLinecap="round"
+                transform={`rotate(-90 ${node.x} ${node.y})`}
+                opacity={isHi ? 0.9 : 0.4}
+                style={{ transition: "opacity 0.25s ease" }}
+              />
+              <SkillGlyph
+                icon={node.icon}
+                x={node.x}
+                y={node.y}
+                size={radius * 1.15}
+              />
+              <text
+                x={lx}
+                y={ly}
+                textAnchor={anchor}
+                dominantBaseline="central"
+                className="skill-node__label"
+                style={{
+                  fill: isHi ? "var(--ink-0)" : "var(--ink-1)",
+                  fontWeight: isHi ? 600 : 400,
+                }}
               >
-                {isHi && (
-                  <circle
-                    cx={node.x} cy={node.y}
-                    r={radius + 6}
-                    fill="none"
-                    stroke={color}
-                    strokeWidth={1.5}
-                    opacity={0.5}
-                    style={{ filter: `drop-shadow(0 0 12px ${color})` }}
-                  />
-                )}
-                <circle
-                  cx={node.x} cy={node.y}
-                  r={radius}
-                  fill={isHi ? `${color}30` : `${color}0A`}
-                  stroke={isHi ? color : `${color}44`}
-                  strokeWidth={isHi ? 2.5 : 1.2}
-                  style={{
-                    transition: 'all 0.4s cubic-bezier(.4,0,.2,1)',
-                    filter: isHi ? `drop-shadow(0 0 8px ${color})` : 'none',
-                    willChange: 'transform',
-                  }}
-                />
-                <circle
-                  cx={node.x} cy={node.y}
-                  r={radius + 4}
-                  fill="none"
-                  stroke={color}
-                  strokeWidth={2}
-                  strokeDasharray={`${arcLen} ${circ - arcLen}`}
-                  strokeLinecap="round"
-                  opacity={isHi ? 0.9 : 0.25}
-                  transform={`rotate(135 ${node.x} ${node.y})`}
-                  style={{ transition: 'opacity 0.35s' }}
-                />
-                <text
-                  x={node.x} y={node.y}
-                  textAnchor="middle"
-                  dominantBaseline="central"
-                  fill={isHi ? '#e0e0ff' : '#8888aa'}
-                  fontSize={Math.max(7.5, Math.min(radius * 0.37, 11))}
-                  fontFamily="'Rajdhani',sans-serif"
-                  fontWeight={isHi ? 600 : 400}
-                  style={{
-                    transition: 'all 0.35s ease',
-                    pointerEvents: 'none',
-                  }}
-                >
-                  {node.label}
-                </text>
-              </motion.g>
-            )
-          })}
-        </svg>
-      </motion.div>
+                {node.label}
+              </text>
+            </motion.g>
+          );
+        })}
+      </motion.svg>
 
-      <style>{`
-        .skill-node { animation: node-pulse 3s ease-in-out infinite; }
-        .skill-node-hi { animation: node-pulse 1.5s ease-in-out infinite !important; }
-        .skill-node-dim { animation: none !important; opacity: 0.35 !important; }
-        @keyframes node-pulse {
-          0%, 100% { opacity: 1; }
-          50% { opacity: 0.75; }
-        }
-      `}</style>
+      <p className="skill-graph__hint">hover to trace · click for details</p>
 
-      {clickedNode && (
-        <SkillDetailPanel
-          node={laidOutNodes.find(n => n.id === clickedNode)}
-          connectedNodeIds={adjacency[clickedNode]}
-          allNodes={laidOutNodes}
-          onClose={() => setClickedNode(null)}
-          catColor={catColors[laidOutNodes.find(n => n.id === clickedNode)?.category] || '#00d4ff'}
-        />
-      )}
-
-      {clickedNode && (
-        <div
-          onClick={() => setClickedNode(null)}
-          style={{ position: 'fixed', inset: 0, zIndex: 15 }}
-        />
+      {clicked && (
+        <>
+          <div
+            className="skill-graph__scrim"
+            onClick={() => setClickedNode(null)}
+          />
+          <SkillDetailPanel
+            node={clicked}
+            connected={Array.from(adjacency[clicked.id] || [])
+              .map((id) => laidOutNodes.find((n) => n.id === id))
+              .filter(Boolean)}
+            onClose={() => setClickedNode(null)}
+            catColor={catColors[clicked.category] || "var(--link)"}
+          />
+        </>
       )}
     </div>
-  )
-}
+  );
+};

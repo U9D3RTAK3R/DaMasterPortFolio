@@ -1,5 +1,6 @@
-import { useState, useRef } from "react";
-import { AnimatedSection } from "./AnimatedSection";
+import { useRef, useState } from "react";
+import { Mail, MapPin, Send } from "lucide-react";
+import { AnimatedSection } from "@/components/AnimatedSection";
 import { useToast } from "@/hooks/use-toast";
 import emailjs from "@emailjs/browser";
 
@@ -45,17 +46,17 @@ export const ContactSection = () => {
       .then(
         () => {
           toast({
-            title: "Message sent!",
-            description:
-              "Thank you for your message. I'll get back to you soon.",
+            title: "Message sent",
+            description: "Thanks — I'll get back to you soon.",
           });
           setSubmitting(false);
           form.current.reset();
         },
         () => {
           toast({
-            title: "Error",
-            description: "Something went wrong. Please try again later.",
+            title: "Message not sent",
+            description:
+              "The form service rejected the request. Try again, or email me directly.",
             variant: "destructive",
           });
           setSubmitting(false);
@@ -64,449 +65,146 @@ export const ContactSection = () => {
   };
 
   return (
-    <section
-      id="contact"
-      className="cyber-section"
-      style={{ background: "var(--bg-deep)", overflow: "hidden" }}
-    >
-      <div className="cyber-grid-bg" />
-      <div
-        className="cyber-orb"
-        style={{
-          width: 420,
-          height: 420,
-          top: "50%",
-          left: "50%",
-          transform: "translate(-50%,-50%)",
-          background: "rgba(0,212,255,0.04)",
-        }}
-      />
-      <div className="cyber-container">
-        <AnimatedSection animationType="fade-up">
-          <div className="section-eyebrow" style={{ justifyContent: "center" }}>
-            Contact
-          </div>
-          <h2 className="section-title">
-            Establish <em>Connection</em>
-          </h2>
-          <p
-            style={{
-              fontFamily: "'Rajdhani', sans-serif",
-              fontSize: "1.05rem",
-              color: "#8888aa",
-              lineHeight: 1.7,
-              marginBottom: "2rem",
-            }}
-          >
-            Always open to discussing software engineering opportunities,
-            collaborations, and innovative ideas.
-          </p>
-        </AnimatedSection>
+    <section id="contact" className="section section--alt">
+      <div className="container section__grid">
+        <div className="section__head section__head--sticky">
+          <AnimatedSection animationType="fade-up">
+            <span className="kicker">07 / Contact</span>
+            <h2 className="h2">
+              {"Let's build "}
+              <span className="accent">something</span>
+            </h2>
+            <p className="sub">
+              Open to software engineering opportunities, collaborations, and
+              ideas that are a little too ambitious.
+            </p>
+          </AnimatedSection>
 
-        <div className="contact-grid">
-          {/* LEFT — Info */}
-          <AnimatedSection animationType="fade-left">
+          <AnimatedSection animationType="fade-up" delay={120}>
             <div
-              className="cyber-card"
-              style={{ padding: "2rem", height: "100%" }}
+              className="card"
+              style={{
+                marginTop: "var(--space-lg)",
+                display: "flex",
+                flexDirection: "column",
+                gap: "var(--space-lg)",
+              }}
             >
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: "1.5rem",
-                }}
-              >
-                {/* Email */}
-                <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-                  <div
-                    style={{
-                      width: 40,
-                      height: 40,
-                      borderRadius: 8,
-                      background: "rgba(0,212,255,0.05)",
-                      border: "1px solid rgba(0,212,255,0.12)",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      flexShrink: 0,
-                    }}
-                  >
-                    <svg
-                      width="16"
-                      height="16"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="#00d4ff"
-                      strokeWidth="1.5"
-                    >
-                      <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
-                      <polyline points="22,6 12,13 2,6" />
-                    </svg>
-                  </div>
-                  <div>
-                    <div
-                      style={{
-                        fontFamily: "'Share Tech Mono', monospace",
-                        fontSize: "0.6rem",
-                        color: "#00d4ff",
-                        marginBottom: 3,
-                      }}
-                    >
-                      $ email
-                    </div>
-                    <a
-                      href="mailto:aritrasaha0508g@gmail.com"
-                      style={{
-                        fontFamily: "'Rajdhani', sans-serif",
-                        fontSize: "1rem",
-                        color: "#e0e0ff",
-                        transition: "color 0.25s",
-                      }}
-                      onMouseEnter={(e) =>
-                        (e.currentTarget.style.color = "#00d4ff")
-                      }
-                      onMouseLeave={(e) =>
-                        (e.currentTarget.style.color = "#e0e0ff")
-                      }
-                    >
-                      aritrasaha0508g@gmail.com
-                    </a>
-                  </div>
-                </div>
-
-                {/* Location */}
-                <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-                  <div
-                    style={{
-                      width: 40,
-                      height: 40,
-                      borderRadius: 8,
-                      background: "rgba(0,212,255,0.05)",
-                      border: "1px solid rgba(0,212,255,0.12)",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      flexShrink: 0,
-                    }}
-                  >
-                    <svg
-                      width="16"
-                      height="16"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="#00d4ff"
-                      strokeWidth="1.5"
-                    >
-                      <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
-                      <circle cx="12" cy="10" r="3" />
-                    </svg>
-                  </div>
-                  <div>
-                    <div
-                      style={{
-                        fontFamily: "'Share Tech Mono', monospace",
-                        fontSize: "0.6rem",
-                        color: "#00d4ff",
-                        marginBottom: 3,
-                      }}
-                    >
-                      $ location
-                    </div>
-                    <span
-                      style={{
-                        fontFamily: "'Rajdhani', sans-serif",
-                        fontSize: "1rem",
-                        color: "#e0e0ff",
-                      }}
-                    >
-                      Kolkata, India
-                    </span>
-                  </div>
-                </div>
-
-                {/* Divider */}
-                <div
-                  style={{ height: 1, background: "rgba(0,212,255,0.08)" }}
-                />
-
-                {/* Social icons */}
+              <div className="info-row">
+                <span className="info-row__icon">
+                  <Mail size={16} />
+                </span>
                 <div>
-                  <div
-                    style={{
-                      fontFamily: "'Share Tech Mono', monospace",
-                      fontSize: "0.6rem",
-                      color: "#8888aa",
-                      marginBottom: "0.75rem",
-                    }}
+                  <div className="info-row__key">$ email</div>
+                  <a
+                    className="info-row__val"
+                    href="mailto:aritrasaha0508g@gmail.com"
                   >
-                    $ find_me_on
-                  </div>
-                  <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
-                    {socialLinks.map((link) => (
-                      <a
-                        key={link.label}
-                        href={link.href}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        aria-label={link.label}
-                        style={{
-                          width: 40,
-                          height: 40,
-                          borderRadius: "50%",
-                          background: "rgba(12,12,26,0.6)",
-                          border: "1px solid rgba(0,212,255,0.1)",
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "center",
-                          transition: "all 0.28s",
-                        }}
-                        onMouseEnter={(e) => {
-                          e.currentTarget.style.borderColor = "#00d4ff";
-                          e.currentTarget.style.background =
-                            "rgba(0,212,255,0.1)";
-                          e.currentTarget.style.transform = "translateY(-3px)";
-                          e.currentTarget.style.boxShadow =
-                            "0 0 15px rgba(0,212,255,0.2)";
-                          e.currentTarget.querySelector("svg").style.fill =
-                            "#00d4ff";
-                        }}
-                        onMouseLeave={(e) => {
-                          e.currentTarget.style.borderColor =
-                            "rgba(0,212,255,0.1)";
-                          e.currentTarget.style.background =
-                            "rgba(12,12,26,0.6)";
-                          e.currentTarget.style.transform = "none";
-                          e.currentTarget.style.boxShadow = "none";
-                          e.currentTarget.querySelector("svg").style.fill =
-                            "#8888aa";
-                        }}
+                    aritrasaha0508g@gmail.com
+                  </a>
+                </div>
+              </div>
+              <div className="info-row">
+                <span className="info-row__icon">
+                  <MapPin size={16} />
+                </span>
+                <div>
+                  <div className="info-row__key">$ location</div>
+                  <span className="info-row__val">Kolkata, India</span>
+                </div>
+              </div>
+              <div>
+                <div className="info-row__key" style={{ marginBottom: "var(--space-sm)" }}>
+                  $ find_me_on
+                </div>
+                <div className="socials">
+                  {socialLinks.map((link) => (
+                    <a
+                      key={link.label}
+                      href={link.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={link.label}
+                      className="social"
+                    >
+                      <svg
+                        width="16"
+                        height="16"
+                        viewBox="0 0 24 24"
+                        fill="currentColor"
+                        aria-hidden="true"
+                        focusable="false"
                       >
-                        <svg
-                          width="16"
-                          height="16"
-                          viewBox="0 0 24 24"
-                          fill="#8888aa"
-                          style={{ transition: "fill 0.28s" }}
-                        >
-                          <path d={link.icon} />
-                        </svg>
-                      </a>
-                    ))}
-                  </div>
+                        <path d={link.icon} />
+                      </svg>
+                    </a>
+                  ))}
                 </div>
               </div>
             </div>
           </AnimatedSection>
-
-          {/* RIGHT — Form */}
-          <AnimatedSection animationType="fade-right" delay={200}>
-            <div className="cyber-card" style={{ padding: "2rem" }}>
-              <form
-                ref={form}
-                onSubmit={handleSubmit}
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: "1.2rem",
-                }}
-              >
-                <div style={{ position: "relative" }}>
-                  <span
-                    style={{
-                      fontFamily: "'Share Tech Mono', monospace",
-                      fontSize: "0.6rem",
-                      color: "#00d4ff",
-                      position: "absolute",
-                      top: -9,
-                      left: 14,
-                      background: "var(--bg-card)",
-                      padding: "0 4px",
-                    }}
-                  >
-                    $ name
-                  </span>
-                  <input
-                    type="text"
-                    name="name"
-                    required
-                    placeholder="Arthur Morgann..."
-                    style={{
-                      width: "100%",
-                      padding: "15px 16px",
-                      background: "rgba(0,212,255,0.02)",
-                      border: "1px solid rgba(0,212,255,0.12)",
-                      borderRadius: 4,
-                      color: "#e0e0ff",
-                      fontFamily: "'Rajdhani', sans-serif",
-                      fontSize: "1rem",
-                      outline: "none",
-                      transition: "all 0.3s",
-                    }}
-                    onFocus={(e) => {
-                      e.currentTarget.style.borderColor = "#00d4ff";
-                      e.currentTarget.style.boxShadow =
-                        "0 0 10px rgba(0,212,255,0.15)";
-                    }}
-                    onBlur={(e) => {
-                      e.currentTarget.style.borderColor =
-                        "rgba(0,212,255,0.12)";
-                      e.currentTarget.style.boxShadow = "none";
-                    }}
-                  />
-                </div>
-                <div style={{ position: "relative" }}>
-                  <span
-                    style={{
-                      fontFamily: "'Share Tech Mono', monospace",
-                      fontSize: "0.6rem",
-                      color: "#00d4ff",
-                      position: "absolute",
-                      top: -9,
-                      left: 14,
-                      background: "var(--bg-card)",
-                      padding: "0 4px",
-                    }}
-                  >
-                    $ email
-                  </span>
-                  <input
-                    type="email"
-                    name="email"
-                    required
-                    placeholder="idontfeelsogood@mr.stark..."
-                    style={{
-                      width: "100%",
-                      padding: "15px 16px",
-                      background: "rgba(0,212,255,0.02)",
-                      border: "1px solid rgba(0,212,255,0.12)",
-                      borderRadius: 4,
-                      color: "#e0e0ff",
-                      fontFamily: "'Rajdhani', sans-serif",
-                      fontSize: "1rem",
-                      outline: "none",
-                      transition: "all 0.3s",
-                    }}
-                    onFocus={(e) => {
-                      e.currentTarget.style.borderColor = "#00d4ff";
-                      e.currentTarget.style.boxShadow =
-                        "0 0 10px rgba(0,212,255,0.15)";
-                    }}
-                    onBlur={(e) => {
-                      e.currentTarget.style.borderColor =
-                        "rgba(0,212,255,0.12)";
-                      e.currentTarget.style.boxShadow = "none";
-                    }}
-                  />
-                </div>
-                <div style={{ position: "relative" }}>
-                  <span
-                    style={{
-                      fontFamily: "'Share Tech Mono', monospace",
-                      fontSize: "0.6rem",
-                      color: "#00d4ff",
-                      position: "absolute",
-                      top: -9,
-                      left: 14,
-                      background: "var(--bg-card)",
-                      padding: "0 4px",
-                    }}
-                  >
-                    $ message
-                  </span>
-                  <textarea
-                    name="message"
-                    required
-                    rows={4}
-                    placeholder="Ok, so here me out on this bombastic idea..."
-                    style={{
-                      width: "100%",
-                      padding: "15px 16px",
-                      background: "rgba(0,212,255,0.02)",
-                      border: "1px solid rgba(0,212,255,0.12)",
-                      borderRadius: 4,
-                      color: "#e0e0ff",
-                      fontFamily: "'Rajdhani', sans-serif",
-                      fontSize: "1rem",
-                      outline: "none",
-                      resize: "vertical",
-                      transition: "all 0.3s",
-                    }}
-                    onFocus={(e) => {
-                      e.currentTarget.style.borderColor = "#00d4ff";
-                      e.currentTarget.style.boxShadow =
-                        "0 0 10px rgba(0,212,255,0.15)";
-                    }}
-                    onBlur={(e) => {
-                      e.currentTarget.style.borderColor =
-                        "rgba(0,212,255,0.12)";
-                      e.currentTarget.style.boxShadow = "none";
-                    }}
-                  />
-                </div>
-                <button
-                  type="submit"
-                  disabled={submitting}
-                  className="cyber-button"
-                  style={{
-                    width: "100%",
-                    justifyContent: "center",
-                    cursor: submitting ? "not-allowed" : "pointer",
-                  }}
-                >
-                  {submitting ? "TRANSMITTING..." : "JARVIS, TRASMIT IT!"}
-                  <svg
-                    width="14"
-                    height="14"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                  >
-                    <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z" />
-                  </svg>
-                </button>
-              </form>
-            </div>
-          </AnimatedSection>
         </div>
 
-        <div
-          style={{
-            height: 1,
-            background: "rgba(0,212,255,0.08)",
-            margin: "2rem auto 1rem",
-            maxWidth: 320,
-          }}
-        />
-        <p
-          style={{
-            fontFamily: "'Share Tech Mono', monospace",
-            fontSize: "0.6rem",
-            fontWeight: 600,
-            letterSpacing: "0.2em",
-            color: "#8888aa",
-            textTransform: "uppercase",
-            textAlign: "center",
-          }}
-        >
-          {"<"}Connection Established{"/>"} I will get back to you ASAP
-        </p>
+        <AnimatedSection animationType="fade-left" delay={150}>
+          <div className="card">
+            <form
+              ref={form}
+              onSubmit={handleSubmit}
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                gap: "var(--space-md)",
+              }}
+            >
+              <div className="field">
+                <label className="field__label" htmlFor="contact-name">
+                  $ name
+                </label>
+                <input
+                  id="contact-name"
+                  type="text"
+                  name="name"
+                  required
+                  placeholder="Arthur Morgann…"
+                />
+              </div>
+              <div className="field">
+                <label className="field__label" htmlFor="contact-email">
+                  $ email
+                </label>
+                <input
+                  id="contact-email"
+                  type="email"
+                  name="email"
+                  required
+                  placeholder="idontfeelsogood@mr.stark…"
+                />
+              </div>
+              <div className="field">
+                <label className="field__label" htmlFor="contact-message">
+                  $ message
+                </label>
+                <textarea
+                  id="contact-message"
+                  name="message"
+                  required
+                  rows={5}
+                  placeholder="Ok, so hear me out on this bombastic idea…"
+                />
+              </div>
+              <button
+                type="submit"
+                disabled={submitting}
+                className="btn btn--solid"
+                style={{ justifyContent: "center" }}
+              >
+                {submitting ? "TRANSMITTING…" : "JARVIS, TRASMIT IT!"}
+                <Send size={14} />
+              </button>
+            </form>
+          </div>
+        </AnimatedSection>
       </div>
-
-      <style>{`
-        .contact-grid {
-          display: grid !important;
-          grid-template-columns: 1fr !important;
-          gap: 1.5rem;
-          align-items: start;
-        }
-        @media (min-width: 768px) {
-          .contact-grid {
-            grid-template-columns: 1fr 1.2fr !important;
-          }
-        }
-      `}</style>
     </section>
   );
 };

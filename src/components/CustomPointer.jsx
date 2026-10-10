@@ -95,15 +95,11 @@ export const CustomPointer = () => {
           bracketBR.current.style.opacity = '1'
         }
       } else {
-        const col = matrix ? 'rgba(0,255,65,0.6)' : (clicking ? 'rgba(255,0,230,0.7)' : 'rgba(0,212,255,0.6)')
-        const shadow = matrix
-          ? (clicking
-            ? '0 0 15px rgba(0,255,65,0.3), inset 0 0 15px rgba(0,255,65,0.06)'
-            : '0 0 10px rgba(0,255,65,0.1), inset 0 0 10px rgba(0,255,65,0.02)')
-          : (clicking
-            ? '0 0 15px rgba(255,0,230,0.3), inset 0 0 15px rgba(255,0,230,0.06)'
-            : '0 0 10px rgba(0,212,255,0.1), inset 0 0 10px rgba(0,212,255,0.02)')
-        const bg = matrix ? (clicking ? 'rgba(0,255,65,0.06)' : 'transparent') : (clicking ? 'rgba(255,0,230,0.06)' : 'transparent')
+        const col = matrix ? 'var(--accent)' : (clicking ? 'var(--error)' : 'var(--link)')
+        const shadow = clicking
+          ? '0 0 15px color-mix(in oklch, var(--accent) 30%, transparent), inset 0 0 15px color-mix(in oklch, var(--accent) 6%, transparent)'
+          : '0 0 10px color-mix(in oklch, var(--accent) 12%, transparent), inset 0 0 10px color-mix(in oklch, var(--accent) 3%, transparent)'
+        const bg = clicking ? 'color-mix(in oklch, var(--accent) 8%, transparent)' : 'transparent'
 
         cursor.style.borderColor = col
         cursor.style.borderWidth = '1.5px'
@@ -153,10 +149,10 @@ export const CustomPointer = () => {
           opacity: 0,
           transition: 'opacity 0.15s, left 0.2s, top 0.2s',
           willChange: 'left, top, opacity',
-          borderTop: isTop ? '2px solid #ffd700' : 'none',
-          borderBottom: !isTop ? '2px solid #ffd700' : 'none',
-          borderLeft: isLeft ? '2px solid #ffd700' : 'none',
-          borderRight: !isLeft ? '2px solid #ffd700' : 'none',
+          borderTop: isTop ? '2px solid var(--highlight)' : 'none',
+          borderBottom: !isTop ? '2px solid var(--highlight)' : 'none',
+          borderLeft: isLeft ? '2px solid var(--highlight)' : 'none',
+          borderRight: !isLeft ? '2px solid var(--highlight)' : 'none',
         }}
       />
     )
@@ -175,7 +171,7 @@ export const CustomPointer = () => {
           pointerEvents: 'none',
           zIndex: 99999,
           borderRadius: 2,
-          border: '1.5px solid rgba(0,212,255,0.6)',
+          border: '1.5px solid var(--link)',
           background: 'transparent',
           willChange: 'transform, left, top',
           overflow: 'visible',
@@ -188,9 +184,9 @@ export const CustomPointer = () => {
           width: 3,
           height: 3,
           borderRadius: '50%',
-          background: '#00d4ff',
+          background: 'var(--accent)',
           transform: 'translate(-50%, -50%)',
-          boxShadow: '0 0 8px rgba(0,212,255,0.8)',
+          boxShadow: '0 0 8px var(--accent)',
         }} />
       </div>
 

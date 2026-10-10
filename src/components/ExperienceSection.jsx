@@ -1,99 +1,70 @@
 import { useState } from "react";
-import {
-  AnimatedSection,
-  StaggerContainer,
-  StaggerItem,
-} from "./AnimatedSection";
+import { AnimatedSection } from "@/components/AnimatedSection";
 
 const experiences = [
   {
-    period: "JULY 2025 – PRESENT",
-    title: "Open-Source Contributor",
-    company: "Independent · REMOTE",
-    logo: "https://cdn.simpleicons.org/github/e0e0ff",
-    details: ["Contributed to 2 major open-source repositories."],
+    period: "Dec 2024 – Present",
+    title: "CacheCrew",
+    company: "Hackathon Team · Kolkata",
+    tag: "Cofounder",
+    details: [
+      "Co-founded and lead CacheCrew, the hackathon team, since first year of college.",
+      "Assemble ideas, scope problems, and ship projects to submission under deadline.",
+    ],
   },
   {
-    period: "DEC 2077 · REDACTED",
+    period: "July 2025 – Present",
+    title: "Open-Source Contributor",
+    company: "Independent · Remote",
+    details: [
+      "Contributed to two major open-source repositories.",
+      "Diagnosed issues, opened pull requests, and reviewed changes.",
+    ],
+  },
+  {
+    period: "Aug 2026 – Present",
+    title: "Home Server",
+    company: "Independent · Kolkata",
+    details: [
+      "Setup a home server using my old laptop.",
+      "Runs on CasaOS and uses services like Jellyfin, Adhome Blocker, Immich."
+    ],
+  },
+  {
+    period: "Dec 2077 · Redacted",
     title: "REDACTED",
-    company: "REDACTED · REMOTE",
-    logo: "https://cdn.simpleicons.org/github/e0e0ff",
+    company: "REDACTED · Remote",
     details: ["REDACTED"],
   },
 ];
 
-function ExpCard({ exp }) {
+function ExpItem({ exp }) {
   const [open, setOpen] = useState(false);
 
   return (
-    <div className="cyber-exp cyber-tl-item">
-      <div className="cyber-tl-dot" />
-      <div style={{ display: "flex", gap: "1.1rem", alignItems: "flex-start" }}>
-        <div
-          style={{
-            width: 42,
-            height: 42,
-            flexShrink: 0,
-            background: "var(--bg-surface)",
-            border: "1px solid rgba(0,212,255,0.1)",
-            borderRadius: 6,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            padding: 5,
-          }}
+    <div className="tl-item">
+      <div className="tl-item__period">{exp.period}</div>
+      <h3 className="tl-item__title">
+        {exp.title}
+        {exp.tag && <span className="tl-item__tag">{exp.tag}</span>}
+      </h3>
+      <div className="tl-item__org">{exp.company}</div>
+      <div className="tl-item__body">
+        <button
+          type="button"
+          className="tl-toggle"
+          aria-expanded={open}
+          onClick={() => setOpen((o) => !o)}
         >
-          <img
-            src={exp.logo}
-            alt=""
-            style={{ width: "100%", height: "100%", objectFit: "contain" }}
-            loading="lazy"
-          />
-        </div>
-        <div style={{ flex: 1, minWidth: 0, textAlign: "left" }}>
-          <div className="cyber-exp-dt" style={{ marginBottom: 4 }}>
-            {exp.period}
-          </div>
-          <h3
-            style={{
-              fontFamily: "'Orbitron', monospace",
-              fontSize: "0.8rem",
-              fontWeight: 600,
-              color: "#e0e0ff",
-              marginBottom: 2,
-            }}
-          >
-            {exp.title}
-          </h3>
-          <p
-            style={{
-              fontFamily: "'Share Tech Mono', monospace",
-              fontSize: "0.65rem",
-              fontWeight: 600,
-              color: "#8888aa",
-              marginBottom: "0.3rem",
-              letterSpacing: "0.07em",
-              textTransform: "uppercase",
-            }}
-          >
-            {exp.company}
-          </p>
-
-          <button onClick={() => setOpen(!open)} className="exp-toggle-btn">
-            {open ? "Show Less" : "View Details"}{" "}
-            <span className="arr">{open ? "↑" : "↓"}</span>
-          </button>
-
-          <div className={`exp-details ${open ? "open" : ""}`}>
-            <div className="exp-details-inner">
-              <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
-                {exp.details.map((d, i) => (
-                  <div key={i} className="cyber-bul">
-                    <span>{d}</span>
-                  </div>
-                ))}
+          {open ? "Hide details ↑" : "View details ↓"}
+        </button>
+        <div className={`tl-details${open ? " open" : ""}`}>
+          <div className="tl-details__inner">
+            {exp.details.map((detail) => (
+              <div className="tl-bullet" key={detail}>
+                <span>{detail}</span>
               </div>
-            </div>
+            ))}
           </div>
         </div>
       </div>
@@ -101,48 +72,26 @@ function ExpCard({ exp }) {
   );
 }
 
-export const ExperienceSection = () => {
-  return (
-    <section
-      id="experience"
-      className="cyber-section"
-      style={{ background: "var(--bg-deep)" }}
-    >
-      <div className="cyber-grid-bg" />
-      <div
-        className="cyber-orb"
-        style={{
-          width: 400,
-          height: 400,
-          top: "30%",
-          right: -150,
-          background: "rgba(255,0,230,0.03)",
-        }}
-      />
-      <div className="cyber-container">
+export const ExperienceSection = () => (
+  <section id="experience" className="section section--alt">
+    <div className="container section__grid">
+      <div className="section__head section__head--sticky">
         <AnimatedSection animationType="fade-up">
-          <div className="section-eyebrow">Experience</div>
-          <h2 className="section-title">
-            Professional <em>Journey</em>
+          <span className="kicker">02 / Experience</span>
+          <h2 className="h2">
+            Roles and <span className="accent">contributions</span>
           </h2>
-          <p className="section-sub">
-            Engineering roles, open-source contributions, and community work
-          </p>
+          <p className="sub">Open-source work and the occasional redaction.</p>
         </AnimatedSection>
-
-        <div
-          className="cyber-tl"
-          style={{ display: "flex", flexDirection: "column", gap: 12 }}
-        >
-          <StaggerContainer staggerDelay={0.15}>
-            {experiences.map((exp, i) => (
-              <StaggerItem key={i}>
-                <ExpCard exp={exp} />
-              </StaggerItem>
-            ))}
-          </StaggerContainer>
-        </div>
       </div>
-    </section>
-  );
-};
+
+      <AnimatedSection animationType="fade-left" delay={120}>
+        <div className="timeline">
+          {experiences.map((exp) => (
+            <ExpItem key={exp.title + exp.period} exp={exp} />
+          ))}
+        </div>
+      </AnimatedSection>
+    </div>
+  </section>
+);

@@ -1,0 +1,114 @@
+/* Hallmark · macrostructure: Split Studio · nav: N10 floating-on-scroll morph
+ * footer: Ft4 dense typographic · theme: studied-DNA (source: https://anir183.is-a.dev/)
+ * genre: technical/atmospheric · pre-emit critique: P5 H4 E5 S4 R5 V4
+ * slop: pass (1–57) · contrast: pass (40–41) · honest: pass (46)
+ * tokens: pass (48) · responsive: pass (49) · icons: pass (30) · mobile: pass (34, 49–56)
+ * chrome: pass (47) — the terminal block IS the interactive content (a live
+ *   pseudo-shell with hidden commands), not a redrawn OS/browser frame; no
+ *   fake browser/phone/IDE chrome.
+ *
+ * Palette — silver + near-black structure, green primary accent (≤5% footprint),
+ * cyan links, blue tags/info, pink error/hover, yellow achievements/highlights.
+ * Dark is the default; light is the "silver" counterpart.
+ */
+
+:root {
+  /* type roles */
+  --font-display: "Unbounded", system-ui, sans-serif;
+  --font-body: "Ubuntu", system-ui, sans-serif;
+  --font-mono: "Share Tech Mono", ui-monospace, monospace;
+
+  /* 4pt spacing scale */
+  --space-3xs: 0.125rem;
+  --space-2xs: 0.25rem;
+  --space-xs: 0.5rem;
+  --space-sm: 0.75rem;
+  --space-md: 1rem;
+  --space-lg: 1.5rem;
+  --space-xl: 2.5rem;
+  --space-2xl: 4rem;
+  --space-3xl: 6rem;
+  --space-4xl: 9rem;
+
+  /* z scale */
+  --z-base: 1;
+  --z-raised: 10;
+  --z-dropdown: 100;
+  --z-sticky: 200;
+  --z-modal: 400;
+  --z-toast: 500;
+  --z-tooltip: 600;
+
+  /* layout rhythm */
+  --page-gutter: clamp(1.25rem, 4vw, 4rem);
+  --measure: 62ch;
+}
+
+/* ---------------------------------------------------------------- dark (default) */
+:root,
+:root[data-theme="dark"] {
+  color-scheme: dark;
+
+  --paper-0: oklch(14% 0.008 250);
+  --paper-1: oklch(18% 0.010 250);
+  --paper-2: oklch(22% 0.012 250);
+  --paper-3: oklch(27% 0.014 250);
+
+  --ink-0: oklch(93% 0.008 250);
+  --ink-1: oklch(72% 0.010 250);
+  --ink-2: oklch(55% 0.012 250);
+
+  --rule: oklch(32% 0.012 250);
+  --rule-strong: oklch(46% 0.014 250);
+
+  --accent: oklch(80% 0.15 150);       /* green — primary */
+  --accent-ink: oklch(18% 0.03 150);
+  --link: oklch(82% 0.12 210);         /* cyan */
+  --info: oklch(68% 0.15 255);         /* blue — tags */
+  --error: oklch(75% 0.16 350);        /* pink */
+  --highlight: oklch(87% 0.15 95);     /* yellow — achievements */
+
+  --focus: oklch(82% 0.12 210);
+
+  --whisper: 0 1px 2px oklch(20% 0.01 250 / 0.05);
+  --hairline: 0 0 0 1px oklch(30% 0.01 250 / 0.06);
+  --shadow-panel: 0 20px 60px oklch(0% 0 0 / 0.5);
+  --shadow-overlay: 0 12px 32px oklch(0% 0 0 / 0.35);
+
+  --grid-line: oklch(80% 0.02 250 / 0.06);
+  --dot: oklch(80% 0.02 250 / 0.10);
+}
+
+/* ---------------------------------------------------------------- light (silver) */
+:root[data-theme="light"] {
+  color-scheme: light;
+
+  --paper-0: oklch(94% 0.006 250);
+  --paper-1: oklch(97% 0.004 250);
+  --paper-2: oklch(90% 0.008 250);
+  --paper-3: oklch(86% 0.010 250);
+
+  --ink-0: oklch(21% 0.012 250);
+  --ink-1: oklch(42% 0.014 250);
+  --ink-2: oklch(56% 0.012 250);
+
+  --rule: oklch(78% 0.010 250);
+  --rule-strong: oklch(64% 0.012 250);
+
+  --accent: oklch(52% 0.14 150);       /* green — primary */
+  --accent-ink: oklch(97% 0.02 150);
+  --link: oklch(48% 0.13 220);
+  --info: oklch(50% 0.16 255);
+  --error: oklch(52% 0.17 350);
+  --highlight: oklch(56% 0.13 80);
+
+  --focus: oklch(48% 0.13 220);
+
+  --whisper: 0 1px 2px oklch(20% 0.01 250 / 0.06);
+  --hairline: 0 0 0 1px oklch(30% 0.01 250 / 0.06);
+  --shadow-panel: 0 20px 60px oklch(20% 0.02 250 / 0.18);
+  --shadow-overlay: 0 12px 32px oklch(20% 0.02 250 / 0.14);
+
+  --grid-line: oklch(20% 0.02 250 / 0.05);
+  --dot: oklch(20% 0.02 250 / 0.12);
+}
