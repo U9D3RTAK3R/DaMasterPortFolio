@@ -34,15 +34,13 @@ const Toast = React.forwardRef(({ variant, ...props }, ref) => {
         alignItems: 'center',
         gap: 12,
         padding: '14px 18px',
-        background: isDestructive ? 'rgba(30,6,14,0.97)' : 'rgba(10,10,22,0.97)',
-        border: `1px solid ${isDestructive ? 'rgba(255,50,50,0.3)' : 'rgba(0,212,255,0.2)'}`,
-        borderRadius: 6,
-        boxShadow: isDestructive
-          ? '0 8px 32px rgba(255,50,50,0.15), inset 0 1px 0 rgba(255,50,50,0.1)'
-          : '0 8px 32px rgba(0,0,0,0.5), 0 0 20px rgba(0,212,255,0.08), inset 0 1px 0 rgba(0,212,255,0.08)',
+        background: 'var(--paper-2)',
+        border: `1px solid ${isDestructive ? 'var(--error)' : 'var(--rule-strong)'}`,
+        borderRadius: 3,
+        boxShadow: 'var(--shadow-overlay)',
         backdropFilter: 'blur(16px)',
         WebkitBackdropFilter: 'blur(16px)',
-        fontFamily: "'Share Tech Mono', monospace",
+        fontFamily: 'var(--font-mono)',
       }}
       {...props}
     />
@@ -59,7 +57,7 @@ const ToastClose = React.forwardRef(({ ...props }, ref) => (
       right: 8,
       background: 'none',
       border: 'none',
-      color: 'rgba(136,136,170,0.5)',
+      color: 'var(--ink-2)',
       cursor: 'pointer',
       padding: 2,
       lineHeight: 1,
@@ -76,9 +74,9 @@ const ToastTitle = React.forwardRef(({ ...props }, ref) => (
   <ToastPrimitives.Title
     ref={ref}
     style={{
-      fontSize: '0.75rem',
+      fontSize: '0.78rem',
       fontWeight: 600,
-      color: '#00d4ff',
+      color: 'var(--accent)',
       letterSpacing: '0.05em',
       lineHeight: 1.3,
     }}
@@ -91,8 +89,8 @@ const ToastDescription = React.forwardRef(({ ...props }, ref) => (
   <ToastPrimitives.Description
     ref={ref}
     style={{
-      fontSize: '0.65rem',
-      color: '#8888aa',
+      fontSize: '0.7rem',
+      color: 'var(--ink-1)',
       lineHeight: 1.4,
       marginTop: 2,
     }}

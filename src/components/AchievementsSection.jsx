@@ -1,212 +1,94 @@
-import { motion } from "framer-motion";
-import { AnimatedSection } from "./AnimatedSection";
+import { AnimatedSection } from "@/components/AnimatedSection";
 
 const achievements = [
   {
     icon: "🏆",
-    title: "GDG TMSL + Safalya Winner",
-    desc: "Won 2nd + 1st Prize respectively for the hackathons among 250+ teams.",
+    title: "Innov-A-Thon — Safalya 2025",
+    desc: "Winner, 1st place and gold medal.",
   },
   {
-    icon: "⭐",
-    title: "Master Procrastinator",
-    desc: "Gold Level (5 Star) in Procrastination.",
+    icon: "🥈",
+    title: "GDG TechSprint 2025",
+    desc: "Winner, 2nd place for Exceptional Technical Complexity.",
   },
   {
     icon: "🎯",
-    title: "Problem Solving",
-    desc: "Strong algorithmic thinking with 500+ problems solved over the course I have walked on this tiny teeny blue planet.",
+    title: "Smart India Hackathon 2025 & 2026",
+    desc: "Only departmental team to clear the first internal round in 2026.",
   },
   {
     icon: "🤝",
-    title: "Community Leadership",
-    desc: "Active member of social clubs, community initiatives, debates, and management skills",
+    title: "Educ-A-Thon 2024",
+    desc: "Participated in a national education-innovation hackathon.",
   },
 ];
 
 const certifications = [
-  { name: "Coming of the Soon~~", org: "TBC" },
-  { name: "Coming of the Soon~~", org: "TBC" },
-  { name: "Coming of the Soon~~", org: "TBC" },
-  { name: "Coming of the Soon~~", org: "TBC" },
-  { name: "Coming of the Soon~~", org: "TBC" },
-  { name: "Coming of the Soon~~", org: "TBC" },
+  { name: "Networking Basics", org: "CISCO" },
+  { name: "Introduction to Cyber Security", org: "CISCO" },
 ];
 
-export const AchievementsSection = () => {
-  return (
-    <section
-      id="achievements"
-      className="cyber-section"
-      style={{ background: "var(--bg-card)" }}
-    >
-      <div className="cyber-container">
-        <AnimatedSection animationType="slide-graph">
-          <div className="section-eyebrow">Achievements</div>
-          <h2 className="section-title">
-            Milestones & <em>Recognition</em>
-          </h2>
-          <p className="section-sub">
-            Awards, accomplishments, and continuous development
-          </p>
-        </AnimatedSection>
+const jokes = [
+  "Master Procrastinator — gold level, 5★",
+  "INF days of Pain and Suffering",
+  "500+ problems solved on this tiny teeny blue planet",
+];
 
-        <div className="ach-grid" style={{ gap: 14, marginBottom: "1.85rem" }}>
+export const AchievementsSection = () => (
+  <section id="achievements" className="section">
+    <div className="container section__grid">
+      <div className="section__head section__head--sticky">
+        <AnimatedSection animationType="fade-up">
+          <span className="kicker">05 / Achievements</span>
+          <h2 className="h2">
+            Milestones and <span className="accent">recognition</span>
+          </h2>
+          <p className="sub">Awards, with the customary nonsense filed small.</p>
+        </AnimatedSection>
+      </div>
+
+      <div>
+        <div className="ach-list">
           {achievements.map((ach, i) => (
-            <motion.div
-              key={i}
-              style={{ display: "flex" }}
-              initial={{ opacity: 0, y: 25 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{
-                duration: 0.6,
-                delay: i * 0.08,
-                ease: [0.25, 0.1, 0.25, 1],
-              }}
-            >
-                <div className="cyber-ach" style={{ textAlign: "left", height: "100%", display: "flex", flexDirection: "column" }}>
-                <div
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: 10,
-                    marginBottom: "0.6rem",
-                  }}
-                >
-                  <span style={{ fontSize: "1.3rem" }}>{ach.icon}</span>
-                  <h4
-                    style={{
-                      fontFamily: "'Orbitron', monospace",
-                      fontSize: "0.9rem",
-                      fontWeight: 600,
-                      color: "#e0e0ff",
-                    }}
-                  >
-                    {ach.title}
-                  </h4>
+            <AnimatedSection key={ach.title} animationType="fade-up" delay={i * 70}>
+              <div className="ach">
+                <div className="ach__head">
+                  <span className="ach__icon" aria-hidden="true">
+                    {ach.icon}
+                  </span>
+                  <h3 className="ach__title">{ach.title}</h3>
                 </div>
-                <p
-                  style={{
-                    fontFamily: "'Rajdhani', sans-serif",
-                    fontSize: "0.95rem",
-                    color: "#8888aa",
-                    lineHeight: 1.6,
-                    flex: 1,
-                  }}
-                >
-                  {ach.desc}
-                </p>
+                <p className="ach__desc">{ach.desc}</p>
               </div>
-            </motion.div>
+            </AnimatedSection>
           ))}
         </div>
 
-        <AnimatedSection animationType="slide-graph" delay={250}>
-          <div
-            className="cyber-card"
-            style={{ padding: "1.8rem", textAlign: "left" }}
-          >
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: 10,
-                marginBottom: "1.1rem",
-                paddingBottom: "0.85rem",
-                borderBottom: "1px solid rgba(0,212,255,0.08)",
-              }}
-            >
-              <span style={{ fontSize: "1.2rem" }}>📜</span>
-              <h4
-                style={{
-                  fontFamily: "'Orbitron', monospace",
-                  fontSize: "1rem",
-                  fontWeight: 700,
-                  color: "#e0e0ff",
-                }}
-              >
-                Certifications
-              </h4>
-            </div>
-            <div
-              style={{
-                display: "grid",
-                gridTemplateColumns: "repeat(auto-fill, minmax(250px, 1fr))",
-                gap: "0 2rem",
-              }}
-            >
+        <AnimatedSection animationType="fade-up" delay={200}>
+          <div className="card" style={{ marginTop: "var(--space-lg)" }}>
+            <h3 className="card__title" style={{ marginBottom: "var(--space-sm)" }}>
+              Certifications
+            </h3>
+            <div className="cert-list">
               {certifications.map((cert, i) => (
-                <div
-                  key={i}
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: 8,
-                    padding: "8px 0",
-                    borderBottom:
-                      i < certifications.length - 1
-                        ? "1px solid rgba(0,212,255,0.05)"
-                        : "none",
-                    fontSize: "0.9rem",
-                    color: "#8888aa",
-                    transition: "all 0.25s",
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.color = "#e0e0ff";
-                    e.currentTarget.style.transform = "translateX(3px)";
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.color = "#8888aa";
-                    e.currentTarget.style.transform = "none";
-                  }}
-                >
-                  <span
-                    style={{
-                      width: 4,
-                      height: 4,
-                      borderRadius: "50%",
-                      background: "#00d4ff",
-                      flexShrink: 0,
-                      boxShadow: "0 0 6px rgba(0,212,255,0.5)",
-                    }}
-                  />
-                  <span style={{ flex: 1 }}>{cert.name}</span>
-                  <span
-                    style={{
-                      fontFamily: "'Share Tech Mono', monospace",
-                      fontSize: "0.6rem",
-                      fontWeight: 600,
-                      color: "#8888aa",
-                      textAlign: "right",
-                      whiteSpace: "nowrap",
-                    }}
-                  >
-                    {cert.org}
-                  </span>
+                <div className="cert" key={`${cert.name}-${i}`}>
+                  <span className="cert__dot" />
+                  <span className="cert__name">{cert.name}</span>
+                  <span className="cert__org">{cert.org}</span>
                 </div>
               ))}
             </div>
           </div>
         </AnimatedSection>
-      </div>
 
-      <style>{`
-        .ach-grid {
-          display: grid !important;
-          grid-template-columns: 1fr !important;
-        }
-        @media (min-width: 640px) {
-          .ach-grid {
-            grid-template-columns: repeat(2, 1fr) !important;
-          }
-        }
-        @media (min-width: 1024px) {
-          .ach-grid {
-            grid-template-columns: repeat(4, 1fr) !important;
-          }
-        }
-      `}</style>
-    </section>
-  );
-};
+        <ul className="joke-strip" aria-label="Footnotes">
+          {jokes.map((joke) => (
+            <li key={joke}>
+              <em>{joke}</em>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </section>
+);

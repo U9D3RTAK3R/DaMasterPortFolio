@@ -1,31 +1,115 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme="dark">
     <head>
         <meta charset="UTF-8" />
         <meta
             name="viewport"
-            content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+            content="width=device-width, initial-scale=1.0"
         />
-        <meta name="theme-color" content="#06060e" id="theme-color-meta" />
+        <meta name="theme-color" content="#131518" id="theme-color-meta" />
         <meta
             name="description"
-            content="Aritra Saha — Software Engineer, Anime Nerd/Gamer, Full-Stack Developer. Cyberpunk portfolio showcasing projects and skills."
+            content="Spawn — Aritra Saha. Full-stack developer in Kolkata crafting responsive, accessible products with React, Go, Flutter & Python. 500+ problems solved · Innov-A-Thon ’25 winner · available for work."
         />
-        <meta property="og:title" content="Aritra Saha | Software Engineer" />
+        <link rel="canonical" href="https://aritra.is-a.dev/" />
+
+        <meta property="og:site_name" content="Spawn" />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://aritra.is-a.dev/" />
+        <meta property="og:title" content="Spawn - Aritra Saha" />
         <meta
             property="og:description"
-            content="Full-stack developer & Jack-of-all trades enthusiast building futuristic digital experiences."
+            content="Aritra Saha — full-stack developer in Kolkata. React · Go · Flutter · Python. 500+ problems solved, Innov-A-Thon ’25 winner. Available for work."
         />
-        <meta property="og:type" content="website" />
+        <meta
+            property="og:image"
+            content="https://aritra.is-a.dev/og-banner.png"
+        />
+        <meta
+            property="og:image:secure_url"
+            content="https://aritra.is-a.dev/og-banner.png"
+        />
+        <meta property="og:image:type" content="image/png" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta
+            property="og:image:alt"
+            content="Spawn — Aritra Saha, full-stack developer"
+        />
+        <meta
+            property="og:locale"
+            content="en_IN"
+        />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Spawn - Aritra Saha" />
+        <meta
+            name="twitter:description"
+            content="Aritra Saha — full-stack developer in Kolkata. React · Go · Flutter · Python. 500+ problems solved, Innov-A-Thon ’25 winner."
+        />
+        <meta
+            name="twitter:image"
+            content="https://aritra.is-a.dev/og-banner.png"
+        />
+
         <link rel="icon" type="image/svg+xml" href="/logo.svg" />
         <link rel="apple-touch-icon" href="/cyber-logo.svg" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
         <link
-            href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap"
+            href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;700;800;900&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,400&family=Share+Tech+Mono&display=swap"
             rel="stylesheet"
         />
-        <title>Aritra Saha | Portfolio v2.0</title>
+
+        <script type="application/ld+json">
+            {
+                "@context": "https://schema.org",
+                "@type": "Person",
+                "name": "Aritra Saha",
+                "url": "https://aritra.is-a.dev/",
+                "jobTitle": "Full-Stack Developer",
+                "address": {
+                    "@type": "PostalAddress",
+                    "addressLocality": "Kolkata",
+                    "addressCountry": "IN"
+                },
+                "alumniOf": "Techno Main Salt Lake",
+                "knowsAbout": [
+                    "React",
+                    "Flutter",
+                    "Go",
+                    "Python",
+                    "Cyber Security"
+                ],
+                "sameAs": [
+                    "https://github.com/U9D3RTAK3R",
+                    "https://linkedin.com/in/aritra-saha-a5ab88311"
+                ]
+            }
+        </script>
+
+        <script>
+            // No-flicker theme: resolve before first paint.
+            (function () {
+                try {
+                    var stored = localStorage.getItem("theme");
+                    var theme = stored
+                        ? stored
+                        : window.matchMedia("(prefers-color-scheme: light)")
+                              .matches
+                          ? "light"
+                          : "dark";
+                    document.documentElement.setAttribute("data-theme", theme);
+                    var meta = document.querySelector("#theme-color-meta");
+                    if (meta)
+                        meta.setAttribute(
+                            "content",
+                            theme === "light" ? "#eef0f3" : "#131518",
+                        );
+                } catch (e) {}
+            })();
+        </script>
+
+        <title>Spawn - Aritra Saha</title>
     </head>
     <body>
         <div id="root"></div>

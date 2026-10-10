@@ -1,70 +1,57 @@
-import { lazy, Suspense, useEffect, useState } from 'react'
-import { Navbar } from '../components/Navbar'
-import { CustomPointer } from '../components/CustomPointer'
-import { ScrollProgress } from '../components/ScrollProgress'
-import { BackToTop } from '../components/BackToTop'
-import { HeroSection } from '../components/HeroSection'
-import { AboutSection } from '../components/AboutSection'
-import { ExperienceSection } from '../components/ExperienceSection'
-import { ProjectsSection } from '../components/ProjectsSection'
-import { SkillsSection } from '../components/SkillsSection'
-import { AchievementsSection } from '../components/AchievementsSection'
-import { ResumeSection } from '../components/ResumeSection'
-import { ContactSection } from '../components/ContactSection'
-import { Footer } from '../components/Footer'
-
-const ThreeBackground = lazy(() => import('../components/ThreeBackground'))
+import { useEffect } from "react";
+import { useLocation } from "react-router-dom";
+import { Navbar } from "@/components/Navbar";
+import { Footer } from "@/components/Footer";
+import { CustomPointer } from "@/components/CustomPointer";
+import { ScrollProgress } from "@/components/ScrollProgress";
+import { BackToTop } from "@/components/BackToTop";
+import { SkipLink } from "@/components/fx/SkipLink";
+import { HeroSection } from "@/components/hero/HeroSection";
+import { AboutSection } from "@/components/AboutSection";
+import { ExperienceSection } from "@/components/ExperienceSection";
+import { ProjectsSection } from "@/components/ProjectsSection";
+import { SkillsSection } from "@/components/SkillsSection";
+import { AchievementsSection } from "@/components/AchievementsSection";
+import { ResumeSection } from "@/components/ResumeSection";
+import { ContactSection } from "@/components/ContactSection";
+import { TerminalSection } from "@/components/TerminalSection";
 
 export const Home = () => {
-  const [hidden, setHidden] = useState(false)
+  const { hash } = useLocation();
 
   useEffect(() => {
-    const heroBottom = window.innerHeight * 0.8
-
-    const handleScroll = () => {
-      const scrollY = window.scrollY
-      const docHeight = document.documentElement.scrollHeight
-      const winHeight = window.innerHeight
-      const scrollPercent = scrollY / (docHeight - winHeight)
-
-      const nearBottom = scrollPercent > 0.75
-      const pastHero = scrollY > heroBottom
-
-      setHidden(pastHero && !nearBottom)
+    if (!hash) {
+      window.scrollTo(0, 0);
+      return;
     }
-
-    handleScroll()
-    window.addEventListener('scroll', handleScroll, { passive: true })
-    return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
+    const id = window.setTimeout(() => {
+      document.querySelector(hash)?.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    }, 60);
+    return () => window.clearTimeout(id);
+  }, [hash]);
 
   return (
-    <div style={{ minHeight: '100vh', position: 'relative' }}>
+    <div style={{ position: "relative" }}>
+      <SkipLink />
       <ScrollProgress />
       <CustomPointer />
-      <Suspense fallback={null}>
-        <ThreeBackground hidden={hidden} />
-      </Suspense>
       <Navbar />
-      <main>
+      <main id="main">
         <HeroSection />
-        <div className="cyber-divider" />
         <AboutSection />
-        <div className="cyber-divider" />
         <ExperienceSection />
-        <div className="cyber-divider" />
         <ProjectsSection />
-        <div className="cyber-divider" />
         <SkillsSection />
-        <div className="cyber-divider" />
         <AchievementsSection />
-        <div className="cyber-divider" />
         <ResumeSection />
-        <div className="cyber-divider" />
         <ContactSection />
+        <TerminalSection />
       </main>
       <Footer />
       <BackToTop />
     </div>
-  )
-}
+  );
+};
